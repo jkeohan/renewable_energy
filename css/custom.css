@@ -1,0 +1,135 @@
+#side
+bar { height: 595px; border: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px; }
+
+.well { height:550px; }
+
+/*** Start Spreadsheet ***/
+
+input{ width:100%; }
+
+spread-sheet { position:relative; width: 100%; overflow:scroll; background: red;}
+
+tr { border: 1px gray solid; }
+
+td { border: 2px black solid; }
+
+div.table { position:relative; height:500px; overflow:scroll; }
+div.data { position: absolute; width: 30px; padding: 0 5px; }
+
+div.head { position: absolute; }
+
+div.datarow { position: absolute;width: 100%;border-top: 2px black solid;background: white;height: 35px;overflow: hidden;}
+
+div.row {margin-left: 0px !important;}
+
+/*** Start Line Graph ***/
+path:hover { fill: #EED6A5; }
+.axis path,
+.axis line { fill: none; stroke: black; shape-rendering: crispEdges; }
+.axis text { font-family: sans-serif; font-size: 11px; }
+.line { stroke: black; opacity: 0.7; fill: none; }
+.line:hover { opacity:1;}
+.label{ font-size: small; font-family: avenir; }
+
+/**** Start Tooltip ****/
+
+.s3tooltip {
+position: absolute;
+padding: 5px;
+pointer-events: none;
+border: 1px solid green;
+border-radius: 12px;
+line-height: 20px;
+opacity: .07;
+background-color:white;
+
+}
+.tooltipTail { position: absolute;
+		border-top: 8px solid transparent;
+		border-bottom: 8px solid transparent; 
+/*		border-right:25px solid green; */
+	}
+.tooltipTail.hidden{
+	display:none;
+	opacity:0;
+}
+.tooltipTail.show{
+	opacity:1;
+}
+/**** End Tooltip ****/
+
+/**** Start Table ****/
+#modal {
+  position:absolute;
+  left: 50px;
+  top:0px;
+  z-index:1;
+  background: white;
+  border: 1px black solid;
+  /*5px solid rgba(255, 255, 255, .5);*/
+  /*box-shadow: 10px 10px 5px #888888;*/
+  width:210px;
+}
+table{
+	width:200px;
+	margin:auto;
+}
+tr {
+  border: 1px gray solid;
+    width:200px;
+    opacity:1;
+}
+td {
+  font-size: 8px;
+  padding-right:15px;
+  padding-left:10px;
+  text-align: center;
+/*    min-width: 125px;*/
+}
+td.data {
+    font-weight: 900;
+  }
+/*.sideBar{
+	height:400px;
+	width:300px;
+	position: absolute;
+  top: 40px;
+  right: 370px;
+}
+*/
+.fcomponents {
+	clear:both;
+}
+
+/**** End Table ****/
+
+/**** Start SIDEBAR ****/
+
+#sidebar .search #matched-record{
+	border: 1px solid black;
+	border-radius:2px;
+	padding:4px;
+}
+/**** END SIDEBAR ****/
+
+/**** Start UL\LI Table ****/
+
+.cf { clear:both; }
+
+.tableheader { padding:4px 9px; border: none !important; }
+
+.cell{ display: inline-block; font-size: 15px; 
+	text-align: left; padding:4px; border: 1px solid grey; cursor:pointer;}
+
+.country { width:100%; }
+.country.cell {width:120px; }
+
+.year.cell { width:80px; }
+
+ul{ height:430px; overflow:scroll; list-style: none; padding:0px; }
+
+/*ul .countryList*/
+/**** End UL\LI ****/
+
+/*** End Line Graph ***/
+

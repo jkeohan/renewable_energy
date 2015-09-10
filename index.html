@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp">
+	<head>
+		<meta charset="UTF-8">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	  <link rel="stylesheet" href="css/custom.css">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+		<script src="http://d3js.org/d3.v3.min.js"></script>
+		 <script type="text/javascript" src="js/reusable.d3.charts.js"></script>
+
+	  <script src="lib/angular/angular.min.js"></script>
+		<script src="lib/angular/angular-route.min.js"></script>
+
+	  <script src="js/app.js"></script>
+	  <script src="js/directives.js"></script>
+	  <script src="js/controllers.js"></script>
+
+	</head>
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-9">
+					<p>Title Goes Here</p>
+				</div>
+				<div class="col-md-3">
+					<p>Tweet...Like...Go Here</p>
+				</div>
+			</div>
+		</div>
+	</header>
+	<body>
+		<div class="container" ng-controller="ChartController">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="well" id="sidebar">
+					  <div class="search">
+
+					 <!--    <label>search: </label> -->
+					    <input ng-model="query" placeholder="Search for country" autofocus>
+
+					    <div id="sidebar-content">
+					    	<p>All countries begining with: <strong>{{query}}</strong></p>
+					   	 	<div id="matched-record">{{query}} is up/down % since 2012</div>
+					   		 <div class="tableheader cell">
+						   		<div class="country cell">Country</div>
+						    	<div class="year cell">2002 rank</div>
+						    	<div class="year cell">2012 rank</div>
+					  		</div><!-- col-md-4 -->
+					  		<div class="cf"></div>
+					      <ul class="countryList">
+							    <li class="country cf" ng-repeat="country in ssdata | filter: query">
+							        <div class="info" style="fill-opacity:.3" 
+							        	ng-style="{ 'background-color':'{{ country.color}}'}"
+												ng-click="choice($index)"
+							        	>
+							          <div class="country cell" id="coun">{{country.Location}}</div>
+							          <div class="year cell">{{country[2002]}}</div>
+							          <div class="year cell">{{country[2012]}}</div>
+							        </div><!-- info -->
+							    </li>
+							  </ul>  
+					  	 </div><!-- sidebar-content -->
+							</div><!-- search -->
+						</div><!-- well sidear -->
+				</div><!-- col-md-4 -->
+				<div class="col-md-8">
+					<div class="well" id="graph-container">
+						<span id="graph-legend">Graph Legend Goes Here</span>
+						<div id="svg-container">
+							<div class="lineChart"></div>
+							<line-graph data="lgdata"></line-graph>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="js/lineChart.js"></script>
+		<script src="js/table.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	</body>
+</html>
