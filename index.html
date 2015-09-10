@@ -43,8 +43,10 @@
 					    <input ng-model="query" placeholder="Search for country" autofocus>
 
 					    <div id="sidebar-content">
-					    	<p>All countries begining with: <strong>{{query}}</strong></p>
-					   	 	<div id="matched-record">{{query}} is up/down % since 2012</div>
+					    	<div id="matched-record" 
+					    		ng-show="filtered.length == 1"><strong>{{filtered[0].Location}}</strong> is up/down % since 2012
+					    		</div>
+					   	 	<p id="all-countries">All countries begining with: <strong>{{query}}</strong></p>
 					   		 <div class="tableheader cell">
 						   		<div class="country cell">Country</div>
 						    	<div class="year cell">2002 rank</div>
@@ -52,7 +54,7 @@
 					  		</div><!-- col-md-4 -->
 					  		<div class="cf"></div>
 					      <ul class="countryList">
-							    <li class="country cf" ng-repeat="country in ssdata | filter: query">
+							    <li class="country cf" ng-repeat="country in filtered = (ssdata | filter:query)">
 							        <div class="info" style="fill-opacity:.3" 
 							        	ng-style="{ 'background-color':'{{ country.color}}'}"
 												ng-click="choice($index)"

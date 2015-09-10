@@ -1,9 +1,10 @@
 myApp.controller('ChartController', function($scope, $http) {
 
+
 	d3.csv('data/data_regions.csv', function(data) {
 		//$scope.data = data;
 
-		var colorScale = d3.scale.category10()
+		var colorScale = d3.scale.category10();
 
     var region = d3.set(data.map(function(d) { return d.Region } ) )
 				.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 

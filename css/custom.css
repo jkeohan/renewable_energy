@@ -1,5 +1,8 @@
 #side
 bar { height: 595px; border: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px; }
+.search input{ margin-bottom:5px;}
+.search #sidebar-content #matched-record { margin-bottom:10px; border-radius: 50px}
+.search #sidebar-content .tableheader { padding:0px;}
 
 .well { height:550px; }
 
