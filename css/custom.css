@@ -1,10 +1,14 @@
-#side
-bar { height: 595px; border: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px; }
+#sidebar { height: 595px; border: 1px solid #ccc; margin-top: 10px; margin-bottom: 10px; }
 .search input{ margin-bottom:5px;}
 .search #sidebar-content #matched-record { margin-bottom:10px; border-radius: 50px}
+.search #sidebar-content .cell{ display: inline-block; font-size: 15px; 
+	text-align: left; padding:4px; border: 1px solid grey; cursor:pointer;}
 .search #sidebar-content .tableheader { padding:0px;}
+.search #sidebar-content .tableheader.cell .cell {margin: 0px; cursor: default !important;}
 
 .well { height:550px; }
+
+.ng-cloak { display: none !important;}
 
 /*** Start Spreadsheet ***/
 
@@ -47,18 +51,7 @@ opacity: .07;
 background-color:white;
 
 }
-.tooltipTail { position: absolute;
-		border-top: 8px solid transparent;
-		border-bottom: 8px solid transparent; 
-/*		border-right:25px solid green; */
-	}
-.tooltipTail.hidden{
-	display:none;
-	opacity:0;
-}
-.tooltipTail.show{
-	opacity:1;
-}
+
 /**** End Tooltip ****/
 
 /**** Start Table ****/
@@ -119,10 +112,10 @@ td.data {
 
 .cf { clear:both; }
 
-.tableheader { padding:4px 9px; border: none !important; }
 
-.cell{ display: inline-block; font-size: 15px; 
-	text-align: left; padding:4px; border: 1px solid grey; cursor:pointer;}
+
+
+/*.tableheader.cell { padding:4px 9px; border: none !important; cursor: default !important;}*/
 
 .country { width:100%; }
 .country.cell {width:120px; }

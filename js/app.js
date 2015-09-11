@@ -47,14 +47,14 @@ var myApp = angular.module('myApp', [
 	 RESOLUTION: updated css for div.table to include:
 	 		height:500px;
 			overflow:scroll; 
-10.ISSUE: unable to 
-
-11.ISSUE: on first load angular hasn't yet loaded so first line below table header is seen as {{}}
-	 RESOLUTION:
 12:ISSUE: removing padding from ul causes boxes ul to position right 40px
 	 RESOLUTION; set padding to 0px
 13: ISSUE: col 9 moved below col 3 after making edits to sidebar
 	  RESOLUTION: 
+14. ISSUE: page refresh iitially displays some code which is then either populated with data or left blank as in the 
+           the case of a search box
+    RESOLUTION: using claa="ng-cloak" on <div class="search ng-cloak">...css is display: none !important
+15. ISSUE: removing tooltip tail references in code removes both 
 
 Line Chart
 1. ISSUE: Legend offset to right by what seems 40px and text cut off due to extedning past svg

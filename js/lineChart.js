@@ -1,8 +1,8 @@
 	(function () { 
 	//Dimensions and padding
-			var margin = {top:20,right:30,bottom:50,left:50}
+			var margin = {top:20,right:0,bottom:50,left:50}
 	
-			var w = 550; //- margin.left - margin.right;
+			var w = 600; //- margin.left - margin.right;
 			var h = 600 - margin.top - margin.bottom;
 			var tooltipcolor;
 			var iceland_active = true;
@@ -45,11 +45,15 @@
 				.append("g")
 
 
-			var tooltip = d3.select(".lineChart").append("div") 
-				.attr("class","s3tooltip")
+			// var tooltip = d3.select(".lineChart").append("div") 
+			// 	.attr("class","s3tooltip")
 
-			var tooltipTail = d3.select(".lineChart").append('div')
-					.attr("class","tooltipTail hidden")
+
+			var tooltip = d3.select('body').append('div')
+				  .style('position','absolute')
+				  .style('padding','0 10px')
+				  .style('opacity',0)
+				  .attr('class','tooltip')
 			
 			var sideBar = d3.select(".sideBar").append("div").attr("id", "modal")
 			  .style("color", "black")
@@ -58,7 +62,7 @@
 			d3.csv("data/data_regions.csv", function(data) {
 	
 				//d3.text("tooltip.html", function(data) { d3.select(".sideBar").append("div").attr("id", "modal").html(data)})
-				console.log(data)
+				//console.log(data)
 				var regions = d3.nest().key(function(d) { return d["Region"]}).sortKeys(d3.ascending).entries(data)
       	regions = regions.filter(function(d) { return !(d.key == "World")})
 
@@ -183,13 +187,32 @@
 							}							
 					})
 					.on("mouseover", function(d) {
-						tooltip1(d);
+						console.log(d)
+						tooltip.style("border" , "3px solid " + d.color )
+					   tooltip.transition()
+					        .style('opacity', .9)
+					        .style('background', 'white')
+					        .style("padding",10)
+					      //tooltip.html( d.location )
+					      	tooltip.html(
+				'<span class="regionName">' + d.location + '</span><br/>' 
+				 + 
+				'<hr  class="d3tooltiphr" style="border: 1px solid ' +  d.color + ' " ' +  '>' 
+				+
+				'<span class="key">2002:</span> <span class="value">' + +d["2002"] + '%</span><br/>'  
+				//+ 
+				// '<span class="key">2012:</span> <span class="value">' + +d["2012"] + '%</span><br/>'
+				)
+					        .style('left',(d3.event.pageX + 35) + 'px')
+					        .style('top', (d3.event.pageY - 30) + 'px')
+
+						//tooltip1(d);
 						mouseOver.call(this,d,d.color)
 							//mouseOver(d,d.color)
 					})
-					.on("mouseout", function(d) {
-						mouseout(d)
-					})
+					// .on("mouseout", function(d) {
+					// 	mouseout(d)
+					// })
 					.attr("d", function(d) { return line(d.headlines)} )
 					//.append("title").text(function(d) {return d.location})
 
@@ -248,6 +271,9 @@
 				}
 			
 				function mouseOver(d,color) {
+
+
+
 					if(iceland_active) { 
 						console.log("inside")
 						//mouseout(iceland[0])
@@ -255,62 +281,20 @@
 									path.style("stroke-width", 3)
 									var circles = d3.selectAll("circle").filter(function(c) {return c.location == "Iceland" } ).attr("r",0)
 					}
-
-
-					// var year = d3.time.format("%Y")
-					// var xDate = xScale.invert(d3.mouse(this)[0])
-
-
-					// var xDate = x.invert(d3.mouse(this)[0]), //<-- give me the date at the x mouse position
-	   		 	// bisect = d3.bisector(function(d) { return d.date; }).left, //<-- set up a bisector to search the array for the closest point to the left
-	   			// idx = bisect(s.values, xDate); //<-- find that point given our mouse position
              
 					var location = d.location
 					path = d3.selectAll("path").filter(function(d) { 
 						return d["location"] === location})
 					path.style("stroke-width", 10)
-					sideBar.html(
-								"<table> <tr>" +
-								        "<th></th>" +
-								   " </tr>" +
-								    "<tr><td>Country</td>" + "<td>" + d.location  + "</td></tr>" +
-								     "<tr><td>Region</td>" + "<td>" + d.region  + "</td></tr>" +
-								     "<tr><td>2002</td>" + "<td>" + d.headlines[0].amount  + "</td></tr>" +
-								     "<tr><td>2003</td>" + "<td>" + d.headlines[1].amount   + "</td></tr>" +
-								     "<tr><td>2004</td>" + "<td>" + d.headlines[2].amount   + "</td></tr>" +
-								     "<tr><td>2005</td>" + "<td>" + d.headlines[3].amount   + "</td></tr>" +
-								     "<tr><td>2006</td>" + "<td>" + d.headlines[4].amount  + "</td></tr>" +
-								     "<tr><td>2007</td>" + "<td>" + d.headlines[5].amount   + "</td></tr>" +
-								     "<tr><td>2008</td>" + "<td>" + d.headlines[6].amount   + "</td></tr>" +
-								     "<tr><td>2009</td>" + "<td>" + d.headlines[7].amount   + "</td></tr>" +
-								     "<tr><td>2010</td>" + "<td>" + d.headlines[8].amount  + "</td></tr>" +
-								     "<tr><td>2011</td>" + "<td>" + d.headlines[9].amount   + "</td></tr>" +
-								     "<tr><td>2012</td>" + "<td>" + d.headlines[10].amount   + "</td></tr>" +
-								"</table>"
-								)
-	// 				).style("background-color","rgba(214, 233, 198,0.5)" )
-	// //.style("border","solid 10px " + c)
-	// //.style("background-color", "#d6e9c6" )
-	// 				var circles = d3.selectAll("circle").filter(function(c) {
-	// 					return c.location == d.location
-	// 				}).attr("r",5).attr("fill",function(d) { return d.color})
-
 
 					.style("background-color","rgba(214, 233, 198,0.5)" )
 						.style("border","solid 10px " + color)
-	//.style("background-color", "#d6e9c6" )
+
 					var circles = d3.selectAll("circle").filter(function(c) {
 						return c.location == d.location
 					}).attr("r",5).attr("fill",function(d) { return d.color})
 
-				}
-
-				// function getSortedKeys(obj) {
-			 //    var keys = []; for(var val in obj) keys.push(val);
-			 //    //console.log(keys)
-			 //    return keys.sort(function(a,b){return obj[a]-obj[b]});
-				// }
-
+				}//mouseover
 				function mouseout(d){
 					var location = d.location
 					path = d3.selectAll("path").filter(function(d) { return d["location"] === location})
@@ -324,8 +308,9 @@
 				}
 
 				function tooltip1 (d){
+
+
 					var yl = yScale(+d.headlines[d.headlines.length -1 ].amount) 
-					tooltipTail(d)
 					text.attr("y", yScale(+d.headlines[d.headlines.length -1 ].amount) + 4 )
 
 					tooltip.style("opacity",0)
@@ -340,19 +325,6 @@
 					 	.style("left", w - 35 + "px")
 						.style("top", yl -18 + "px")
 					}
-
-				function tooltipTail (d) {
-					var currentYear = d.headlines
-					var tailX = w -70;
-					var tailY = yScale(+d.headlines[d.headlines.length -1 ].amount) 
-				  var tail = d3.select(".tooltipTail").classed("hidden",false)
-				  .style("border-right" , "25px solid " + d.color)
-				  	.transition().duration(1000)
-						.style("left", tailX + 5 + "px")
-						.style("top", tailY -8 + "px")			
-				}
-
-
 				//Axes
 				svg.append("g")
 					.attr("class", "x axis")
