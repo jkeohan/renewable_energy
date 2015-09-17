@@ -15,7 +15,7 @@
     var filtered = [];
 
     angular.forEach(items, function(item) {
-    	console.log(item.Location)
+    	//console.log(item.Location)
       if(strStartsWith(item.Location.toLowerCase(), query.toLowerCase())){
         filtered.push(item);
       }
@@ -36,8 +36,12 @@ myApp.controller('ChartController', function($scope, $http) {
 				.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
 
     colorScale.domain(region)
+    console.log(data)
+
+    $scope.newdata = data
 
 		$scope.ssdata = data.map(function(d) { 
+			var c = colorScale(d.Region)
 			return {
 				Location: d.Location,
 				Region: d.Region,
@@ -50,6 +54,7 @@ myApp.controller('ChartController', function($scope, $http) {
 		$scope.ssdata.sort
 		//console.log($scope.ssdata)
 		$scope.lgdata = data
+		//because d3.csv is being used to retrieve the data $scope.$apply is needed
 		$scope.$apply();
 		//console.log(ssData)
 		//console.log($scope.ssdata)
@@ -63,9 +68,15 @@ myApp.controller('ChartController', function($scope, $http) {
 	// 	throw err; 
 	// })
 
-	$scope.choice = function(index) { 
-		$scope.query=$scope.ssdata[index].Location
+	$scope.choice = function(country) { 
+		console.log(country)
+		// if($scope.filtered.length == 1 && index == 0) { return }
+		// $scope.query=$scope.ssdata[index].Location
+		$scope.query = country.Location
+		dashboard(country)
 	}
+
+
 
 	// $scope.filterBySearch = function(country) {
 	// 	console.log($scope.query)

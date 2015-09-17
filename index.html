@@ -57,11 +57,14 @@
 <!-- 							    <li class="country cf" ng-repeat="country in filtered = (ssdata | filter:filterBySearch)">
  -->							    <!-- <li class="country cf" ng-repeat="country in ssdata | filter:filterBySearch"> -->
  										<li class="country cf" ng-repeat="country in filtered = (ssdata | myfilter:query)"> 
-							        <div class="info" style="fill-opacity:.3" 
-							        	ng-style="{ 'background-color':'{{ country.color}}'}"
-												ng-click="choice($index)"
+							        <div class="info" 
+							        	ng-style= "{ 'background-color':'{{ country.color}} '}"
+												ng-click="choice(country)"
+												} 
 							        	>
-							          <div class="country cell" id="coun">{{country.Location}}</div>
+							          <div class="country cell
+   													{{ filtered.length === 1 ? 'active' : 'inactive' }}
+							          " id="coun">{{country.Location}}</div>
 							          <div class="year cell">{{country[2002]}}</div>
 							          <div class="year cell">{{country[2012]}}</div>
 							        </div><!-- info -->

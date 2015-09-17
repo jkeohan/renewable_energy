@@ -54,12 +54,21 @@ var myApp = angular.module('myApp', [
 14. ISSUE: page refresh iitially displays some code which is then either populated with data or left blank as in the 
            the case of a search box
     RESOLUTION: using claa="ng-cloak" on <div class="search ng-cloak">...css is display: none !important
-15. ISSUE: removing tooltip tail references in code removes both 
+15. ISSUE: Clicking on country code cell in table after it's been filtered changes it to Australia
+	  RESOLUTION: 1) easier to add some logic\css to change pointer to default OR figure out why it's happening
+	  Tried implementing CSS and this work but the item is still clickable.  Posted on angular forum
 
 Line Chart
 1. ISSUE: Legend offset to right by what seems 40px and text cut off due to extedning past svg
 	 RESOLUTION: width attr needed to be set to 550px
 2. ISSUE: first g in svg is 811x479 which exceeds width of svg (700)
+
+3. ISSUE: cl error: Invalid value for <g> attribute transform="translate(NaN,0)"
+	 RESOLUTION: moved groups = svg.selectAll("g").data(dataset).enter().append("g") into linechart function
+4. ISSUE: Responsive doesn't redraw the lines and data is being cut off. g component extends past svg
+					@ 730px width data starts to be cut off.
+					Responsive doesn't exapnd the line if the inital resolution is @730px. 
+	 RESOLUTION: moved paths = groups.selectAll("path").data(function(d) { }) to linechart funciton
 Additional: 
 
 
