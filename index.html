@@ -44,7 +44,7 @@
 
 					    <div id="sidebar-content">
 					    	<div id="matched-record" 
-					    		ng-show="filtered.length == 1"><strong>{{filtered[0].Location}}</strong> is up/down % since 2012
+					    		ng-show="filtered.length === 1"><strong>{{filtered[0].Location}}</strong> is up/down % since 2012
 					    		</div>
 					   	 	<p id="all-countries">All countries begining with: <strong>{{query}}</strong></p>
 					   		<div class="tableheader cell">
@@ -56,11 +56,10 @@
 					      <ul class="countryList">
 <!-- 							    <li class="country cf" ng-repeat="country in filtered = (ssdata | filter:filterBySearch)">
  -->							    <!-- <li class="country cf" ng-repeat="country in ssdata | filter:filterBySearch"> -->
- 										<li class="country cf" ng-repeat="country in filtered = (ssdata | myfilter:query)"> 
+ 										<li class="country cf" ng-repeat="country in filtered  = (newdata | myfilter:query) track by $index"> 
 							        <div class="info" 
 							        	ng-style= "{ 'background-color':'{{ country.color}} '}"
 												ng-click="choice(country)"
-												} 
 							        	>
 							          <div class="country cell
    													{{ filtered.length === 1 ? 'active' : 'inactive' }}
@@ -78,7 +77,7 @@
 					<div class="well" id="graph-container">
 						<span id="graph-legend">Graph Legend Goes Here</span>
 						<div id="svg-container">
-							<div class="lineChart"></div>
+							<svg class="lineChart"></svg>
 							<line-graph data="lgdata"></line-graph>
 						</div>
 					</div>

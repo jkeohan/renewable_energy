@@ -36,9 +36,13 @@ myApp.controller('ChartController', function($scope, $http) {
 				.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
 
     colorScale.domain(region)
-    console.log(data)
 
     $scope.newdata = data
+   	$scope.$watch('filtered', function(filtered) {
+   		dashboard(filtered)
+	  },true)
+
+	
 
 		$scope.ssdata = data.map(function(d) { 
 			var c = colorScale(d.Region)
@@ -69,11 +73,10 @@ myApp.controller('ChartController', function($scope, $http) {
 	// })
 
 	$scope.choice = function(country) { 
-		console.log(country)
 		// if($scope.filtered.length == 1 && index == 0) { return }
 		// $scope.query=$scope.ssdata[index].Location
 		$scope.query = country.Location
-		dashboard(country)
+		dashboard([country][0])
 	}
 
 

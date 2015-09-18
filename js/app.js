@@ -69,6 +69,7 @@ Line Chart
 					@ 730px width data starts to be cut off.
 					Responsive doesn't exapnd the line if the inital resolution is @730px. 
 	 RESOLUTION: moved paths = groups.selectAll("path").data(function(d) { }) to linechart funciton
+5. ISSUE: when filter applied additional <g class="x axis"> elements are added.  3 being the most seen when using P to filter
 Additional: 
 
 
