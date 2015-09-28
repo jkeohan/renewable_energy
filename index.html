@@ -38,7 +38,6 @@
 				<div class="col-md-4">
 					<div class="well" id="sidebar">
 					  <div class="search ng-cloak">
-
 					 <!--    <label>search: </label> -->
 					    <input ng-model="query" placeholder="Search for country" autofocus>
 
@@ -49,14 +48,14 @@
 					   	 	<p id="all-countries">All countries begining with: <strong>{{query}}</strong></p>
 					   		<div class="tableheader cell">
 						   		<div class="country cell">Country</div>
-						    	<div class="year cell">2002 rank</div>
-						    	<div class="year cell">2012 rank</div>
+						    	<div class="year cell">2002 %</div>
+						    	<div class="year cell">2012 %</div>
 					  		</div><!-- col-md-4 -->
 					  		<div class="cf"></div>
 					      <ul class="countryList">
 <!-- 							    <li class="country cf" ng-repeat="country in filtered = (ssdata | filter:filterBySearch)">
  -->							    <!-- <li class="country cf" ng-repeat="country in ssdata | filter:filterBySearch"> -->
- 										<li class="country cf" ng-repeat="country in filtered  = (newdata | myfilter:query) track by $index"> 
+ 										<li class="country cf" ng-repeat="country in filtered  = (data_regions | myfilter:query) track by $index"> 
 							        <div class="info" 
 							        	ng-style= "{ 'background-color':'{{ country.color}} '}"
 												ng-click="choice(country)"
