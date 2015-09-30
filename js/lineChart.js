@@ -18,54 +18,55 @@
 		};
 
 	function createLineChart(data,targetDiv) {
+		//console.log(data)
 			//data is an array that contains the objects as follows:
 			//{ 2002:"6.2", 2003:"6.1", Location: "Australia", Region: "Oceana" }
 			if(Array.isArray(data) ) { console.log("yes")} else { console.log("no")}
 			//console.log(data)
 			var tooltipcolor;
-			var colorScale = d3.scale.category10();
-			//Set up date formatting and years
-			dateFormat = d3.time.format("%Y");   
-			//console.log(data)
-			//years are filtered out to be used later when creating new dataset
-			years = d3.keys(data[0]).filter( function(key) { return key != "Location" && key != "Region" } ) 
-			regions = d3.nest().key(function(d) { return d["Region"]}).sortKeys(d3.ascending).entries(data)
-      regions = regions.filter(function(d) { return !(d.key == "World")})
-      //[{color:"#12b3ae",key:"Africa",values:[{Location:"South Africa",2002:"12.1",2003:"13.1"}]}]
-      //array containing only region names
-  	 	var region = d3.set(data.map(function(d) {return d.Region } ) )
-			.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
+			// var colorScale = d3.scale.category10();
+			// //Set up date formatting and years
+			// dateFormat = d3.time.format("%Y");   
+			// //console.log(data)
+			// //years are filtered out to be used later when creating new dataset
+			// years = d3.keys(data[0]).filter( function(key) { return key != "Location" && key != "Region" } ) 
+			// regions = d3.nest().key(function(d) { return d["Region"]}).sortKeys(d3.ascending).entries(data)
+   //    regions = regions.filter(function(d) { return !(d.key == "World")})
+   //    //[{color:"#12b3ae",key:"Africa",values:[{Location:"South Africa",2002:"12.1",2003:"13.1"}]}]
+   //    //array containing only region names
+  	//  	var region = d3.set(data.map(function(d) {return d.Region } ) )
+			// .values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
 
-			function colorize (regions) {
-				regions.forEach( function(d,i) {
-					d.color = colorScale(d.key);
-				})
-			}
+			// function colorize (regions) {
+			// 	regions.forEach( function(d,i) {
+			// 		d.color = colorScale(d.key);
+			// 	})
+			// }
 
-			colorScale.domain(region)
-			colorize(regions) 
-			//Create a new, empty array to hold our restructured dataset
-			dataset = [];
-			//data is an array that contains the objects as follows: 
-			//location: "Australia"
-			//region: "Oceana"
-			//years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
+			// colorScale.domain(region)
+			// colorize(regions) 
+			// //Create a new, empty array to hold our restructured dataset
+			// dataset = [];
+			// //data is an array that contains the objects as follows: 
+			// //location: "Australia"
+			// //region: "Oceana"
+			// //years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
 
-			//Loop once for each row in data
-			for (var i = 0; i < data.length; i++) {
-				//Create new object with Location name and empty array
-				dataset[i] = { location: data[i].Location, region: data[i].Region, years: [] };
-				//Loop through all the years
-				for (var j = 0; j < years.length; j++) {
-					// If value is not empty then placeholder is created
-					if (data[i][years[j]]) { dataset[i].years.push({ year: years[j], amount: data[i][years[j]] }); }
-				}
-			} 
+			// //Loop once for each row in data
+			// for (var i = 0; i < data.length; i++) {
+			// 	//Create new object with Location name and empty array
+			// 	dataset[i] = { location: data[i].Location, region: data[i].Region, years: [] };
+			// 	//Loop through all the years
+			// 	for (var j = 0; j < years.length; j++) {
+			// 		// If value is not empty then placeholder is created
+			// 		if (data[i][years[j]]) { dataset[i].years.push({ year: years[j], amount: data[i][years[j]] }); }
+			// 	}
+			// } 
 
       	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
-      	//console.log(dataset)
-      	//Make a group for each country
-				groups = svg.selectAll("g.line").data(dataset)
+   //    	//console.log(dataset)
+   //    	//Make a group for each country
+				groups = svg.selectAll("g.line").data(data)
 
 				groups.enter().append("g").classed("line",true)
 
@@ -76,7 +77,11 @@
 			//binding just the years data to each one.
 			// //using this format .data(dataset) will warp the line color and append World as the 
 			//title for every line
-			paths = groups.selectAll("path").data(function(d) { return [d] })
+			paths = groups.selectAll("path").data(function(d) {  return [d] })
+			//color: "#f12345"
+			//location: "Australia"
+			//region: "Oceana"
+			//years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
 
 			paths.enter().append("path")	
 				.style("stroke", 

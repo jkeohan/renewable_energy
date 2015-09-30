@@ -4,11 +4,14 @@
 
  myApp.filter('myfilter', function() {
 
+
+
    function strStartsWith(str, prefix) {
    	//console.log((str+"").indexOf(prefix))
     return (str+"").indexOf(prefix) === 0;
    }
    return function( items, query) {
+   	console.log(items)
 
    	if(!query) { return items }
 
@@ -16,7 +19,7 @@
 
     angular.forEach(items, function(item) {
     	//console.log(item.Location)
-      if(strStartsWith(item.Location.toLowerCase(), query.toLowerCase())){
+      if(strStartsWith(item.location.toLowerCase(), query.toLowerCase())){
         filtered.push(item);
       }
     });
@@ -27,21 +30,75 @@
 
 myApp.controller('ChartController', function($scope, $http) {
 
+	$scope.choice = function(country) { 
+	// if($scope.filtered.length == 1 && index == 0) { return }
+	// $scope.query=$scope.ssdata[index].Location
+	$scope.query = country.Location
+	console.log(country)
+	dashboard([country][0])
+	}
+
+	$scope.amount2002 = function(country) {
+		if( country.years[0]["year"] === "2002" ) { return country.years[0]["amount"] }
+	}
+
+	$scope.amount2012 = function(country) {
+		if( country.years[10]["year"] === "2012" ) { return country.years[10]["amount"] }
+	}
+
 	d3.csv('data/data_regions.csv', function(data) {
 		//$scope.data = data;
     var region = d3.set(data.map(function(d) { return d.Region } ) )
 				.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
 		var colorScale = d3.scale.category10().domain(region);
     //colorScale.domain(region)
-    $scope.data_regions = data
-   	$scope.$watch('filtered', function(filtered) {
-   		console.log(filtered)
-   		dashboard(filtered)
-	  },true)
+   
+
+    dateFormat = d3.time.format("%Y");   
+			//console.log(data)
+			//years are filtered out to be used later when creating new dataset
+			years = d3.keys(data[0]).filter( function(key) { return key != "Location" && key != "Region" } ) 
+			regions = d3.nest().key(function(d) { return d["Region"]}).sortKeys(d3.ascending).entries(data)
+      regions = regions.filter(function(d) { return !(d.key == "World")})
+      //[{color:"#12b3ae",key:"Africa",values:[{Location:"South Africa",2002:"12.1",2003:"13.1"}]}]
+      //array containing only region names
+  	 	var region = d3.set(data.map(function(d) {return d.Region } ) )
+			.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
+
+			function colorize (regions) {
+				regions.forEach( function(d,i) {
+					d.color = colorScale(d.key);
+				})
+			}
+
+			colorScale.domain(region)
+			colorize(regions) 
+			//Create a new, empty array to hold our restructured dataset
+			dataset = [];
+			//data is an array that contains the objects as follows: 
+			//location: "Australia"
+			//region: "Oceana"
+			//years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
+
+			//Loop once for each row in data
+			for (var i = 0; i < data.length; i++) {
+				//Create new object with Location name and empty array
+				dataset[i] = { location: data[i].Location, region: data[i].Region, years: [] };
+				//Loop through all the years
+				for (var j = 0; j < years.length; j++) {
+					// If value is not empty then placeholder is created
+					if (data[i][years[j]]) { dataset[i].years.push({ year: years[j], amount: data[i][years[j]] }); }
+				}
+			} 
+
+
 		//console.log($scope.ssdata)
-		$scope.lgdata = data
+		//$scope.lgdata = data
 		//because d3.csv is being used to retrieve the data $scope.$apply is needed
+		$scope.data_regions = dataset
 		$scope.$apply();
+
+		//console.log($scope.filtered) //filtered isn't a variable...
 		//console.log(ssData)
 		//console.log($scope.ssdata)
 			// var $scope.stringify = JSON.stringify($scope.ssdata)
@@ -52,13 +109,13 @@ myApp.controller('ChartController', function($scope, $http) {
 	// 	throw err; 
 	// })
 	
-	$scope.choice = function(country) { 
-		// if($scope.filtered.length == 1 && index == 0) { return }
-		// $scope.query=$scope.ssdata[index].Location
-		$scope.query = country.Location
-		console.log(country)
-		dashboard([country][0])
-	}
+	$scope.$watch('filtered', function(filtered) {
+   		console.log(filtered)
+
+   		dashboard(filtered)
+   		//if( filtered[0].years[0]["year"] === "2002" ) { filtered[0].years[0]["amount"] } 
+	  },true)
+
 
 	// $scope.filterBySearch = function(country) {
 	// 	console.log($scope.query)

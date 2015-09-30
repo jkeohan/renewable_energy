@@ -62,9 +62,11 @@
 							        	>
 							          <div class="country cell
    													{{ filtered.length === 1 ? 'active' : 'inactive' }}
-							          " id="coun">{{country.Location}}</div>
-							          <div class="year cell">{{country[2002]}}</div>
-							          <div class="year cell">{{country[2012]}}</div>
+							          " id="coun">{{country.location}}</div>
+							          <div class="year cell">
+							          {{ amount2002(country) }}</div>
+							          <div class="year cell">
+							          {{ amount2012(country) }}</div>
 							        </div><!-- info -->
 							    </li>
 							  </ul>  
