@@ -18,104 +18,54 @@
 		};
 
 	function createLineChart(data,targetDiv) {
-		//console.log(data)
-			//data is an array that contains the objects as follows:
-			//{ 2002:"6.2", 2003:"6.1", Location: "Australia", Region: "Oceana" }
-			if(Array.isArray(data) ) { console.log("yes")} else { console.log("no")}
-			//console.log(data)
-			var tooltipcolor;
-			// var colorScale = d3.scale.category10();
-			// //Set up date formatting and years
-			// dateFormat = d3.time.format("%Y");   
-			// //console.log(data)
-			// //years are filtered out to be used later when creating new dataset
-			// years = d3.keys(data[0]).filter( function(key) { return key != "Location" && key != "Region" } ) 
-			// regions = d3.nest().key(function(d) { return d["Region"]}).sortKeys(d3.ascending).entries(data)
-   //    regions = regions.filter(function(d) { return !(d.key == "World")})
-   //    //[{color:"#12b3ae",key:"Africa",values:[{Location:"South Africa",2002:"12.1",2003:"13.1"}]}]
-   //    //array containing only region names
-  	//  	var region = d3.set(data.map(function(d) {return d.Region } ) )
-			// .values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
+			console.log(data)
+    	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
+			groups = svg.selectAll("g.line").data(data)
+			groups.enter().append("g").classed("line",true)
+			groups.exit().remove()
 
-			// function colorize (regions) {
-			// 	regions.forEach( function(d,i) {
-			// 		d.color = colorScale(d.key);
-			// 	})
-			// }
-
-			// colorScale.domain(region)
-			// colorize(regions) 
-			// //Create a new, empty array to hold our restructured dataset
-			// dataset = [];
-			// //data is an array that contains the objects as follows: 
-			// //location: "Australia"
-			// //region: "Oceana"
-			// //years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
-
-			// //Loop once for each row in data
-			// for (var i = 0; i < data.length; i++) {
-			// 	//Create new object with Location name and empty array
-			// 	dataset[i] = { location: data[i].Location, region: data[i].Region, years: [] };
-			// 	//Loop through all the years
-			// 	for (var j = 0; j < years.length; j++) {
-			// 		// If value is not empty then placeholder is created
-			// 		if (data[i][years[j]]) { dataset[i].years.push({ year: years[j], amount: data[i][years[j]] }); }
-			// 	}
-			// } 
-
-      	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
-   //    	//console.log(dataset)
-   //    	//Make a group for each country
-				groups = svg.selectAll("g.line").data(data)
-
-				groups.enter().append("g").classed("line",true)
-
-				groups.exit().remove()
-				//groups.exit().transition().duration(500).remove()
-
-			//Within each group, create a new line/path,
-			//binding just the years data to each one.
-			// //using this format .data(dataset) will warp the line color and append World as the 
-			//title for every line
 			paths = groups.selectAll("path").data(function(d) {  return [d] })
-			//color: "#f12345"
-			//location: "Australia"
-			//region: "Oceana"
-			//years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
-
 			paths.enter().append("path")	
-				.style("stroke", 
-					function(d,i) { 
-    				var val;
-						regions.forEach(function(obj) {
-							if(d.region === obj.key) { 
-								val = obj.color } 
-						})
-						d.color = val
-						return val
-      		}).style("stroke-width", 3).style("opacity",.4)
+				.style("stroke", function(d,i) {  return d.color})
+				// .style("stroke", 
+				// 	function(d,i) { 
+    // 				var val;
+				// 		regions.forEach(function(obj) {
+				// 			if(d.region === obj.key) { 
+				// 				val = obj.color } 
+				// 		})
+				// 		d.color = val
+				// 		return val
+    //   		})
+				.style("stroke-width", 3).style("opacity",.4)
 				.attr("id",function(d) { return d.region})
-				.attr("class", function(d) {
-						switch (d.region) {
-							case "Oceana": return "line Oceana"
-							case "Europe": return "line Europe"
-							case "North America": return "line NA"
-							case "Asia": return "line Asia"
-							case "Middle East": return "line ME"
-							case "Latin America": return "line LA"
-							default: return "line"
-						}							
-				})
+				.append("title").text(function(d) {return d.location})
+				// .attr("class", function(d) {
+				// 		switch (d.region) {
+				// 			case "Oceana": return "line Oceana"
+				// 			case "Europe": return "line Europe"
+				// 			case "North America": return "line NA"
+				// 			case "Asia": return "line Asia"
+				// 			case "Middle East": return "line ME"
+				// 			case "Latin America": return "line LA"
+				// 			default: return "line"
+				// 		}							
+				// })
 				//paths.exit().transition().duration(500).attr("fill-opacity",0).remove()
 				// svg.append("g").attr("class", "x axis")
 				// svg.append("g").attr("class", "y axis")
+
+	  //UPDATE
+		paths.style("stroke", function(d,i) { return d.color}).attr("id",function(d) { return d.region})
+		.select("title").text(function(d) {return d.location})
+			
 
 				if(d3.select(".x.axis")[0][0] === null ) {  xgScale = svg.append("g").attr("class", "x axis")   }
 				if(d3.select(".y.axis")[0][0] === null ) {  ygScale = svg.append("g").attr("class", "y axis")   }
 				
 				//Set up scales
 				xScale = d3.time.scale().domain(d3.extent(years, function(d) { return dateFormat.parse(d)}))
-				yScale = d3.scale.linear().domain([ d3.max(dataset, function(d) { return d3.max(d.years, function(d) {return +d.amount; });}),0 ]);
+				yScale = d3.scale.linear().domain([ d3.max(data, function(d) { return d3.max(d.years, function(d) {return +d.amount; });}),0 ]);
 
 				xAxis = d3.svg.axis().orient("bottom").ticks(15).tickFormat(function(d) { return dateFormat(d); });
 				yAxis = d3.svg.axis().orient("left").tickFormat(function(d) { return d + "%" } ); 
@@ -166,7 +116,7 @@
 			//region: "Oceana"
 			//years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
 			paths.attr("d", function(d) { return line(d.years)} )
-				.append("title").text(function(d) {return d.location})
+				//.select("title").text(function(d) {return d.location})
 
 				//Axes
 
