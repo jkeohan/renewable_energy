@@ -35,7 +35,7 @@
 	<body>
 		<div class="container" ng-controller="ChartController">
 			<div class="row">
-				<div class="col-md-4">
+				<div class="col-md-3">
 					<div class="well" id="sidebar">
 					  <div class="search ng-cloak">
 					 <!--    <label>search: </label> -->
@@ -56,17 +56,22 @@
 <!-- 							    <li class="country cf" ng-repeat="country in filtered = (ssdata | filter:filterBySearch)">
  -->							    <!-- <li class="country cf" ng-repeat="country in ssdata | filter:filterBySearch"> -->
  										<li class="country cf" ng-repeat="country in filtered  = (data_regions | myfilter:query) track by $index"> 
-							        <div class="info" 
-							        	ng-style= "{ 'background-color':'{{ country.color}} '}"
-												ng-click="choice(country)"
+							        <div class="info {{color(country)}}" 
+							        	ng-style = "elmStyle"
+												ng-click ="choice(country)"
 							        	>
 							          <div class="country cell
    													{{ filtered.length === 1 ? 'active' : 'inactive' }}
-							          " id="coun">{{country.location}}</div>
+							          " id="coun" 
+
+												
+											
+							          >{{country.location}}</div>
 							          <div class="year cell">
 							          {{ amount2002(country) }}</div>
 							          <div class="year cell">
 							          {{ amount2012(country) }}</div>
+
 							        </div><!-- info -->
 							    </li>
 							  </ul>  
@@ -74,7 +79,7 @@
 							</div><!-- search -->
 						</div><!-- well sidear -->
 				</div><!-- col-md-4 -->
-				<div class="col-md-8">
+				<div class="col-md-9">
 					<div class="well" id="graph-container">
 						<span id="graph-legend">Graph Legend Goes Here</span>
 						<div id="svg-container">

@@ -18,7 +18,7 @@
 		};
 
 	function createLineChart(data,targetDiv) {
-			console.log(data)
+			//console.log(data)
     	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
 			groups = svg.selectAll("g.line").data(data)
 			groups.enter().append("g").classed("line",true)

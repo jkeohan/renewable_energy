@@ -67,16 +67,9 @@ myApp.controller('ChartController', function($scope, $http) {
 					if (data[i][years[j]]) { dataset[i].years.push({ year: years[j], amount: data[i][years[j]] }); }
 				}
 			} 
-
-		//console.log($scope.ssdata)
-		//$scope.lgdata = data
 		//because d3.csv is being used to retrieve the data $scope.$apply is needed
 		$scope.data_regions = dataset
 		$scope.$apply();
-
-		//console.log($scope.filtered) //filtered isn't a variable...
-		//console.log(ssData)
-		//console.log($scope.ssdata)
 			// var $scope.stringify = JSON.stringify($scope.ssdata)
 	 })//d3.csv
 	// $http.get('data/data_regions.csv').then(function(response) {
@@ -86,17 +79,18 @@ myApp.controller('ChartController', function($scope, $http) {
 	// })
 	
 	$scope.$watch('filtered', function(filtered) {
-   		console.log(filtered)
+   		//console.log(filtered)
    		dashboard(filtered)
-   		//if( filtered[0].years[0]["year"] === "2002" ) { filtered[0].years[0]["amount"] } 
 	  },true)
+
+	$scope.elmStyle;
 
 	$scope.choice = function(country) { 
 		// if($scope.filtered.length == 1 && index == 0) { return }
 		// $scope.query=$scope.ssdata[index].Location
-		$scope.query = country.Location
-		//console.log(country)
-		console.log(country)
+		$scope.query = country.location
+		console.log(country.color)
+		//console.log($scope.query.color)
 		dashboard([country])
 	}
 
@@ -107,6 +101,20 @@ myApp.controller('ChartController', function($scope, $http) {
 
 	$scope.amount2012 = function(country) {
 		if( country.years[10]["year"] === "2012" ) { return country.years[10]["amount"] }
+	}
+
+	$scope.color = function(country) {
+		
+		function convertHex(hex,opacity){
+    hex = hex.replace('#','');
+    r = parseInt(hex.substring(0,2), 16);
+    g = parseInt(hex.substring(2,4), 16);
+    b = parseInt(hex.substring(4,6), 16);
+
+    result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
+    return result;
+	}
+	$scope.elmStyle = { 'background': convertHex(country.color,50) } 
 	}
 
 	// $scope.filterBySearch = function(country) {

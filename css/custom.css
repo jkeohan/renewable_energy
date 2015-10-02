@@ -1,12 +1,24 @@
+* {
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
 #sidebar { height: 550px; border: 1px solid #ccc;  margin-bottom: 10px; }
 .search input{ margin-bottom:5px;}
 .search #sidebar-content #matched-record { margin-bottom:10px; border-radius: 50px}
-.search #sidebar-content .cell{ display: inline-block; font-size: 15px; 
+.search #sidebar-content .cell{ display: inline-block; font-size: 12px; 
 	text-align: left; padding:4px; border: 1px solid grey; cursor:pointer;}
 .search #sidebar-content .countryList .country .country.cell.active{ cursor:default !important; }
 .search #sidebar-content .tableheader { padding:0px;}
 .search #sidebar-content .tableheader.cell .cell {margin: 0px; cursor: default !important;}
 .search #sidebar-content .countrylist .country .info { fill-opacity:.3 ;}
+.search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
+.search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
+.search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
+.search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
+
+.search #sidebar-content .countryList{ display:inline-block;}
 
 .well { height:550px; }
 
@@ -86,6 +98,7 @@ td {
   text-align: center;
 /*    min-width: 125px;*/
 }
+
 td.data {
     font-weight: 900;
   }
@@ -122,11 +135,15 @@ td.data {
 /*.tableheader.cell { padding:4px 9px; border: none !important; cursor: default !important;}*/
 
 .country { width:100%; }
-.country.cell {width:120px; }
+.country.cell {width:100px; }
 
-.year.cell { width:80px; }
+.year.cell { width:50px; }
+
+.cell { font-size: 0.8em !important; box-sizing: border-box;}
 
 ul{ height:430px; overflow:scroll; list-style: none; padding:0px; }
+
+
 
 /*ul .countryList*/
 /**** End UL\LI ****/
