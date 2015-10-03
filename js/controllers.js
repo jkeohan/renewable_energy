@@ -24,6 +24,27 @@
 
 myApp.controller('ChartController', function($scope, $http) {
 
+	$scope.updown = 0;
+	$scope.percentage = function(value) {
+	
+		var year2002 = d3.format('.2f')(value.years[0].amount )
+		var year2012 = d3.format('.2f')( value.years[10].amount ) 
+		console.log(year2002)
+		console.log(year2012)
+		var change = d3.format('.0f')((year2012 - year2002)/year2002 * 100)
+		if(change < 0) { 
+			$scope.updown = "down"
+			return change}
+		else { 
+			$scope.updown = "up"
+			return change }
+		console.log(change)
+		return "up"
+	
+	}
+
+	//$scope.percentage = (($scope.filtered/ $scope.totalQuestions) * 100).toFixed(2);
+
 	d3.csv('data/data_regions.csv', function(data) {
 		//$scope.data = data;
     // var region = d3.set(data.map(function(d) { return d.Region } ) )
@@ -78,9 +99,10 @@ myApp.controller('ChartController', function($scope, $http) {
 	// 	throw err; 
 	// })
 	
-	$scope.$watch('filtered', function(filtered) {
-   		//console.log(filtered)
-   		dashboard(filtered)
+	$scope.$watch('filtered', function(newValue, oldValue) {
+			if (newValue !== oldValue) {dashboard(newValue) }
+			//console.log(newValue)	
+		console.log()
 	  },true)
 
 	$scope.elmStyle;
@@ -102,7 +124,6 @@ myApp.controller('ChartController', function($scope, $http) {
 	$scope.amount2012 = function(country) {
 		if( country.years[10]["year"] === "2012" ) { return country.years[10]["amount"] }
 	}
-
 	$scope.color = function(country) {
 		
 		function convertHex(hex,opacity){
@@ -114,7 +135,7 @@ myApp.controller('ChartController', function($scope, $http) {
     result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
     return result;
 	}
-	$scope.elmStyle = { 'background': convertHex(country.color,50) } 
+	$scope.elmStyle = { 'background': convertHex(country.color,40) } 
 	}
 
 	// $scope.filterBySearch = function(country) {

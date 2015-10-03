@@ -5,19 +5,18 @@
 }
 
 #sidebar { height: 550px; border: 1px solid #ccc;  margin-bottom: 10px; }
+.search { font-size: .8em;}
 .search input{ margin-bottom:5px;}
 .search #sidebar-content #matched-record { margin-bottom:10px; border-radius: 50px}
-.search #sidebar-content .cell{ display: inline-block; font-size: 12px; 
+.search #sidebar-content #matched-record span.up { color:green;}
+.search #sidebar-content #matched-record span.down { color:red;}
+.search #sidebar-content .cell{ display: inline-block;  
 	text-align: left; padding:4px; border: 1px solid grey; cursor:pointer;}
 .search #sidebar-content .countryList .country .country.cell.active{ cursor:default !important; }
 .search #sidebar-content .tableheader { padding:0px;}
 .search #sidebar-content .tableheader.cell .cell {margin: 0px; cursor: default !important;}
 .search #sidebar-content .countrylist .country .info { fill-opacity:.3 ;}
 .search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
-.search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
-.search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
-.search #sidebar-content .countryList .country .info.Europe{ background-color: green; }
-
 .search #sidebar-content .countryList{ display:inline-block;}
 
 .well { height:550px; }
@@ -44,11 +43,13 @@ div.datarow { position: absolute;width: 100%;border-top: 2px black solid;backgro
 div.row {margin-left: 0px !important;}
 
 /*** Start Line Graph ***/
+path { fill: none;}
 path:hover { fill: #EED6A5; }
 .axis path,
 .axis line { fill: none; stroke: black; shape-rendering: crispEdges; }
 .axis text { font-family: sans-serif; font-size: 11px; }
 .line { stroke: black; opacity: 0.7; fill: none; }
+.path.line { stroke: black; opacity: 0.7; fill: none; }
 .line:hover { opacity:1;}
 .label{ font-size: small; font-family: avenir; }
 
@@ -139,7 +140,7 @@ td.data {
 
 .year.cell { width:50px; }
 
-.cell { font-size: 0.8em !important; box-sizing: border-box;}
+.cell { box-sizing: border-box;}
 
 ul{ height:430px; overflow:scroll; list-style: none; padding:0px; }
 
