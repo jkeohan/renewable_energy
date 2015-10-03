@@ -26,7 +26,7 @@ myApp.controller('ChartController', function($scope, $http) {
 
 	$scope.updown = 0;
 	$scope.percentage = function(value) {
-	
+		if(value != null) {
 		var year2002 = d3.format('.2f')(value.years[0].amount )
 		var year2012 = d3.format('.2f')( value.years[10].amount ) 
 		console.log(year2002)
@@ -40,7 +40,7 @@ myApp.controller('ChartController', function($scope, $http) {
 			return change }
 		console.log(change)
 		return "up"
-	
+		}
 	}
 
 	//$scope.percentage = (($scope.filtered/ $scope.totalQuestions) * 100).toFixed(2);
@@ -62,7 +62,7 @@ myApp.controller('ChartController', function($scope, $http) {
       //array containing only region names
   	 	var region = d3.set(data.map(function(d) {return d.Region } ) )
 			.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
-			var colorScale = d3.scale.category10().domain(region);
+			colorScale = d3.scale.category10().domain(region);
 
 			// function colorize (regions) {
 			// 	regions.forEach( function(d,i) {
@@ -71,6 +71,8 @@ myApp.controller('ChartController', function($scope, $http) {
 			// }
 
 			colorScale.domain(region)
+	
+
 			//colorize(regions) 
 			//Create a new, empty array to hold our restructured dataset
 			dataset = [];

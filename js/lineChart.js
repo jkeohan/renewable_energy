@@ -15,6 +15,8 @@
 
 	function createLineChart(data,targetDiv) {
 
+
+
   	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
 		groups = svg.selectAll("g.line").data(data)
 		groups.enter().append("g").classed("line",true)
@@ -35,7 +37,7 @@
 		if(d3.select(".x.axis")[0][0] === null ) {  xgScale = svg.append("g").attr("class", "x axis")   }
 		if(d3.select(".y.axis")[0][0] === null ) {  ygScale = svg.append("g").attr("class", "y axis")   }
 		
-		var exit = paths.exit().remove()
+		//var exit = paths.exit().remove()
 		//Set up scales
 		xScale = d3.time.scale().domain(d3.extent(years, function(d) { return dateFormat.parse(d)}))
 		yScale = d3.scale.linear().domain([ d3.max(data, function(d) { return d3.max(d.years, function(d) {return +d.amount; });}),0 ]);
@@ -55,6 +57,19 @@
 			var margin = {top:20,right:0,bottom:30,left:50}
 			var w = linechart[0] - margin.left - margin.right;
 			var h = linechart[1] - margin.top - margin.bottom;	
+
+			var rlegend = d3.models.legend()
+			    .fontSize(15)
+			    // .width(w-160)
+			    // .height(h)
+			    .position("horizontal")
+			    .inputScale(colorScale)
+
+			var svg_legned = d3.select("#graph-legend")
+			  svg_legned.call(rlegend)
+
+			  //svg.call(rlegend)
+
 			//Create main SVG
 			svg.attr("width", w + margin.left + margin.right).attr("height", h + margin.top + margin.bottom)
 			//Update Scales

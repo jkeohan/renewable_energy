@@ -52,7 +52,7 @@ d3.models.legend = function () {
 		      .on("mouseout", dispatch.mouseOut)
 		} else {   
 
-		     var legend = selection.append('g').attr("transform","translate(0,0)")
+		  var legend = selection.append('g').attr("transform","translate(0,0)")
         .selectAll('.legend')
         .data(legendValues)//.slice().sort())
         .enter().append('g')
@@ -79,14 +79,14 @@ d3.models.legend = function () {
         //     }
         // })
 
-      legend.append('text')
-        .attr("x", 110)
-        .attr("y", height - 145)
-        .attr("dy", ".35em")
-        .text(function(d,i) { return d.text})
-        .attr("class","textselected")
-        .style("text-anchor", "end")
-        .style("font-size", 13)
+      // legend.append('text')
+      //   .attr("x", 110)
+      //   .attr("y", height - 145)
+      //   .attr("dy", ".35em")
+      //   .text(function(d,i) { return d.text})
+      //   .attr("class","textselected")
+      //   .style("text-anchor", "end")
+      //   .style("font-size", 13)
 		  }//else
 		})//_selection.each()
 	}//render()
@@ -115,7 +115,6 @@ d3.models.legend = function () {
         legendValues.push(cellObject)
         //console.log(legendValues)
     	})
-
 		return this;
   }
   render.position = function(_x) {
