@@ -36,7 +36,6 @@ d3.models.legend = function () {
 
 			var legend = selection.selectAll("legend").data(legendValues).enter().append("g")
 				.attr("class", "legend")
-
 			legend.attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"})
 				 legend.append('rect')
 			 		.attr({ x:width+5, y:5, width: 10, height: 10 })
@@ -49,30 +48,25 @@ d3.models.legend = function () {
 		      .attr("class", "textselected")
 		      .style("text-anchor", "start")
 		      .style("font-size", fontSize)
-		      // .on("mouseover",dispatch.mouseOver)
-		      // .on("mouseout", dispatch.mouseOut)
+		      .on("mouseover",dispatch.mouseOver)
+		      .on("mouseout", dispatch.mouseOut)
 		} else {   
 
-			var legend = selection.selectAll("legend").data(legendValues).enter().append('div')
+			var legend = selection.selectAll("legend")
+				.append('g').attr("transform","translate(0,0)")
+        .data(legendValues)//.slice().sort())
+        .enter().append('g')
         .attr("class", "legend")
+        .attr("transform", function(d,i ) { return "translate(" + i * 50 + ",50)"})
 
-      legend
-        .html(function(d,i) {return d.text})
-        .style("color", function(d,i) { console.log(d) ; return d.color })
-        .style("display","inline-block")
-        .style("padding","0px 5px")
-        .style("margin",".2em")
-        //.attr("transform", function(d,i ) { return "translate(" + i * 50 + ",50)"})
-
-      // legend.append('rect')
-      //   .attr("x", 120)
-      //   .attr("y", height - 150)
-      //   .attr("width", 10)
-      //   .attr("height", 10)
-      //   .attr("class","rect enabled")
-      //   .style("fill", function(d,i) { return d.color} )
-      //   .style("stroke",function(d,i) { return d.color } )
-
+      legend.append('rect')
+        .attr("x", 120)
+        .attr("y", height - 150)
+        .attr("width", 10)
+        .attr("height", 10)
+        .attr("class","rect enabled")
+        .style("fill", function(d,i) { return d.color} )
+        .style("stroke",function(d,i) { return d.color } )
         // .on("click", function(d) {
         //   //var legendChoice = d;
         //   var rect = d3.select(this); 
@@ -85,14 +79,14 @@ d3.models.legend = function () {
         //     }
         // })
 
-      // legend.append('text')
-      //   .attr("x", 110)
-      //   .attr("y", height - 145)
-      //   .attr("dy", ".35em")
-      //   .text(function(d,i) { return d.text})
-      //   .attr("class","textselected")
-      //   .style("text-anchor", "end")
-      //   .style("font-size", 13)
+      legend.append('text')
+        .attr("x", 110)
+        .attr("y", height - 145)
+        .attr("dy", ".35em")
+        .text(function(d,i) { return d.text})
+        .attr("class","textselected")
+        .style("text-anchor", "end")
+        .style("font-size", 13)
 		  }//else
 		})//_selection.each()
 	}//render()

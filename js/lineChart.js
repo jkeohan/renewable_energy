@@ -15,8 +15,6 @@
 
 	function createLineChart(data,targetDiv) {
 
-
-
   	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
 		groups = svg.selectAll("g.line").data(data)
 		groups.enter().append("g").classed("line",true)
@@ -49,31 +47,34 @@
 			.x(function(d) { return xScale(dateFormat.parse(d.year));})
 			.y(function(d) {return yScale(+d.amount);
 		});
+
+		if(d3.selectAll(".legend")[0].length === 0)	{
+					var rlegend = d3.models.legend()
+			    .fontSize(".8em")
+			   // .width(w)
+			    //.height(100)
+			   	.position("horizontal")
+			    .inputScale(colorScale)
+
+		
+			var svg_legend = d3.select("#graph-legend")//.attr("width",1000).attr("height",15)
+			svg_legend.call(rlegend)
+		}
 	}
 
 	function redraw() {
 			//console.log("inside redraw")
 			var linechart = canvasSize(".lineChart")
-			var margin = {top:20,right:0,bottom:30,left:50}
+			var margin = {top:20,right:5,bottom:30,left:30}
 			var w = linechart[0] - margin.left - margin.right;
 			var h = linechart[1] - margin.top - margin.bottom;	
-
-			var rlegend = d3.models.legend()
-			    .fontSize(15)
-			    // .width(w-160)
-			    // .height(h)
-			    .position("horizontal")
-			    .inputScale(colorScale)
-
-			var svg_legned = d3.select("#graph-legend")
-			  svg_legned.call(rlegend)
 
 			  //svg.call(rlegend)
 
 			//Create main SVG
 			svg.attr("width", w + margin.left + margin.right).attr("height", h + margin.top + margin.bottom)
 			//Update Scales
-			xScale.range([margin.left, w])
+			xScale.range([margin.left, w + 20])
 			yScale.range([ margin.top, h ])	
 			//Update Axis's
 			xAxis.scale(xScale)//.orient("bottom").ticks(15).tickFormat(function(d) { return dateFormat(d); });
