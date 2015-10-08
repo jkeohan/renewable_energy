@@ -70,7 +70,7 @@ div.row {margin-left: 0px !important;}
 #graph-container #graph-legend { text-align: center;}
 /*** Start Line Graph ***/
 path { fill: none;}
-path:hover { fill: #EED6A5; }
+path:hover { fill: #EED6A5; stroke-width:5px;}
 .axis path,
 .axis line { fill: none; stroke: black; shape-rendering: crispEdges; }
 .axis text { font-family: sans-serif; font-size: 11px; }

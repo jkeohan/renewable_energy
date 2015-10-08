@@ -16,17 +16,26 @@
 	function createLineChart(data,targetDiv) {
 
   	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
+  	var tooltip = d3.select("body").data(data).append("div").attr("class","tooltip")
+  	.style("postion","absolute")
+  	.style("padding","0 10px")
+  	.style("opacity", 0)
+
 		groups = svg.selectAll("g.line").data(data)
 		groups.enter().append("g").classed("line",true)
 		groups.exit().remove()
 		//DATA JOIN
 		paths = groups.selectAll("path").data(function(d) { return [d] })
+
 		//ENTER
 		paths.enter().append("path")	
+			.on('mouseover', function() { d3.select(this).style("stroke-width", 5) } )
+			.on('mouseout',  function() { d3.select(this).style("stroke-width", 2 ) } )
 			.style("stroke-width", 0).style("opacity",.4)
 			.style("stroke", function(d,i) {  return d.color})
-			.attr("id",function(d) { return d.region})
+			.attr("id",function(d) { return d.location})
 			.append("title").text(function(d) {return d.location})
+		
 	  //UPDATE
 	  //[Array[1],Array[1]]
 	  //Array[1]...0: path#Oceana..__data__: Object..color,location,region,years[]
@@ -48,6 +57,8 @@
 			.y(function(d) {return yScale(+d.amount);
 		});
 
+		//mouseOver(d){console.log("inside")}
+
 		if(d3.selectAll(".legend")[0].length === 0)	{
 					var rlegend = d3.models.legend()
 			    .fontSize(".8em")
@@ -56,7 +67,6 @@
 			   	.position("horizontal")
 			    .inputScale(colorScale)
 
-		
 			var svg_legend = d3.select("#graph-legend")//.attr("width",1000).attr("height",15)
 			svg_legend.call(rlegend)
 		}

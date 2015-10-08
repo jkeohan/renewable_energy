@@ -24,13 +24,11 @@
 
 myApp.controller('ChartController', function($scope, $http) {
 
-	$scope.updown = 0;
+	$scope.updown = 0;//WHAT DOES THIS DO?
 	$scope.percentage = function(value) {
 		if(value != null) {
 		var year2002 = d3.format('.2f')(value.years[0].amount )
 		var year2012 = d3.format('.2f')( value.years[10].amount ) 
-		console.log(year2002)
-		console.log(year2012)
 		var change = d3.format('.0f')((year2012 - year2002)/year2002 * 100)
 		if(change < 0) { 
 			$scope.updown = "down"
@@ -63,16 +61,12 @@ myApp.controller('ChartController', function($scope, $http) {
   	 	var region = d3.set(data.map(function(d) {return d.Region } ) )
 			.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
 			colorScale = d3.scale.category10().domain(region);
-
 			// function colorize (regions) {
 			// 	regions.forEach( function(d,i) {
 			// 		d.color = colorScale(d.key);
 			// 	})
 			// }
-
 			colorScale.domain(region)
-	
-
 			//colorize(regions) 
 			//Create a new, empty array to hold our restructured dataset
 			dataset = [];
@@ -103,8 +97,8 @@ myApp.controller('ChartController', function($scope, $http) {
 	
 	$scope.$watch('filtered', function(newValue, oldValue) {
 			if (newValue !== oldValue) {dashboard(newValue) }
-			//console.log(newValue)	
-		console.log()
+		$scope.filtered = newValue
+	console.log($scope.filtered)
 	  },true)
 
 	$scope.elmStyle;
@@ -113,30 +107,22 @@ myApp.controller('ChartController', function($scope, $http) {
 		// if($scope.filtered.length == 1 && index == 0) { return }
 		// $scope.query=$scope.ssdata[index].Location
 		$scope.query = country.location
-		console.log(country.color)
-		//console.log($scope.query.color)
 		dashboard([country])
 	}
-
 	$scope.amount2002 = function(country) {
 		//console.log(country)
 		if( country.years[0]["year"] === "2002" ) { return country.years[0]["amount"] }
 	}
-
 	$scope.amount2012 = function(country) {
 		if( country.years[10]["year"] === "2012" ) { return country.years[10]["amount"] }
 	}
 	$scope.color = function(country) {
-		
 		function convertHex(hex,opacity){
-    hex = hex.replace('#','');
-    r = parseInt(hex.substring(0,2), 16);
-    g = parseInt(hex.substring(2,4), 16);
-    b = parseInt(hex.substring(4,6), 16);
-
-    result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
-    return result;
-	}
+	    hex = hex.replace('#','');
+	    r = parseInt(hex.substring(0,2), 16);g = parseInt(hex.substring(2,4), 16);b = parseInt(hex.substring(4,6), 16);
+	    result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
+	    return result;
+		}
 	$scope.elmStyle = { 'background': convertHex(country.color,40) } 
 	}
 
