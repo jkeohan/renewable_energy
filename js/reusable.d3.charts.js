@@ -58,7 +58,7 @@ d3.models.legend = function () {
 
       legend
         .html(function(d,i) {return d.text})
-        .style("color", function(d,i) { console.log(d) ; return d.color })
+        .style("color", function(d,i) {return d.color })
         .style("display","inline-block")
         .style("padding","0px 5px")
         .style("margin",".2em")

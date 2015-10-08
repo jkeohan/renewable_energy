@@ -24,13 +24,12 @@
 
 myApp.controller('ChartController', function($scope, $http) {
 
+
 	$scope.updown = 0;
 	$scope.percentage = function(value) {
 		if(value != null) {
 		var year2002 = d3.format('.2f')(value.years[0].amount )
 		var year2012 = d3.format('.2f')( value.years[10].amount ) 
-		console.log(year2002)
-		console.log(year2012)
 		var change = d3.format('.0f')((year2012 - year2002)/year2002 * 100)
 		if(change < 0) { 
 			$scope.updown = "down"
