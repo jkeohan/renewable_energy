@@ -16,51 +16,59 @@
 	function createLineChart(data,targetDiv) {
 
   	svg = d3.select(".lineChart")//.append("svg").attr("class","svg")
+  	var tooltip = d3.select("body").data(data).append("div").attr("class","tooltip")
+  	.style("postion","absolute")
+  	.style("padding","0 10px")
+  	.style("opacity", 0)
+
 		groups = svg.selectAll("g.line").data(data)
 		groups.enter().append("g").classed("line",true)
-		groups.exit().remove()
+		groups.exit().transition().duration(1000).style("opacity",0).remove()
 		//DATA JOIN
 		paths = groups.selectAll("path").data(function(d) { return [d] })
+
 		//ENTER
 		paths.enter().append("path")	
+			.on('mouseover', function() { d3.select(this).style("stroke-width", 5) } )
+			.on('mouseout',  function() { d3.select(this).style("stroke-width", 2 ) } )
 			.style("stroke-width", 0).style("opacity",.4)
 			.style("stroke", function(d,i) {  return d.color})
-			.attr("id",function(d) { return d.region})
+			.attr("id",function(d) { return d.location})
 			.append("title").text(function(d) {return d.location})
+		
 	  //UPDATE
-	  //[Array[1],Array[1]]
 	  //Array[1]...0: path#Oceana..__data__: Object..color,location,region,years[]
 		paths.transition().duration(1000)
 		.select("title").text(function(d) {return d.location})	
 		if(d3.select(".x.axis")[0][0] === null ) {  xgScale = svg.append("g").attr("class", "x axis")   }
-		if(d3.select(".y.axis")[0][0] === null ) {  ygScale = svg.append("g").attr("class", "y axis")   }
+		if(d3.select(".y.axis")[0][0] === null ) {  ygScale = svg.append("g").attr("class", "y axis")
+			.append("text")//.style("text-anchor","start")
+  		.attr({ class: "ylabel", y: -60, x: -290, dy: ".71em" })
+  		.attr("transform", "rotate(-90)")	
+  		.text("2012 Renewable Energy Output").style("font-size",20)   }
 		
-		//var exit = paths.exit().remove()
-		//Set up scales
+		//CONFIGURE SCALES
 		xScale = d3.time.scale().domain(d3.extent(years, function(d) { return dateFormat.parse(d)}))
 		yScale = d3.scale.linear().domain([ d3.max(data, function(d) { return d3.max(d.years, function(d) {return +d.amount; });}),0 ]);
-
+		//CONFIGURE AXISES
 		xAxis = d3.svg.axis().orient("bottom").ticks(15).tickFormat(function(d) { return dateFormat(d); });
 		yAxis = d3.svg.axis().orient("left").tickFormat(function(d) { return d + "%" } ); 
-
+		//PATH GENERATOR 
 		line = d3.svg.line()
 			.x(function(d) { return xScale(dateFormat.parse(d.year));})
 			.y(function(d) {return yScale(+d.amount);
 		});
-
+		//LEGEND
+		//RUN IF SO AS NOT TO 
 		if(d3.selectAll(".legend")[0].length === 0)	{
-					var rlegend = d3.models.legend()
-			    .fontSize(".8em")
-			   // .width(w)
-			    //.height(100)
-			   	.position("horizontal")
-			    .inputScale(colorScale)
-
-		
-			var svg_legend = d3.select("#graph-legend")//.attr("width",1000).attr("height",15)
-			svg_legend.call(rlegend)
-		}
-	}
+			var rlegend = d3.models.legend()
+		    .fontSize(".8em")
+		   	.position("horizontal")
+		    .inputScale(colorScale);
+			var svg_legend = d3.select("#graph-legend");
+			svg_legend.call(rlegend);
+		};
+	};//CREATELINECHART
 
 	function redraw() {
 			//console.log("inside redraw")
@@ -68,9 +76,6 @@
 			var margin = {top:20,right:5,bottom:30,left:30}
 			var w = linechart[0] - margin.left - margin.right;
 			var h = linechart[1] - margin.top - margin.bottom;	
-
-			  //svg.call(rlegend)
-
 			//Create main SVG
 			svg.attr("width", w + margin.left + margin.right).attr("height", h + margin.top + margin.bottom)
 			//Update Scales
@@ -88,7 +93,7 @@
 			.transition().duration(1500).attr("d", function(d) { return line(d.years)} )
 			.style("stroke-width", 2)
 				//.select("title").text(function(d) {return d.location})
-	}
+	}//REDRAW()
 
 				//svg.select(".x.axis").transition().duration(2000).ease("sin-in-out").call(yAxis);
 			//data is an array that contains the objects as follows: 

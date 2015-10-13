@@ -49,12 +49,18 @@ d3.models.legend = function () {
 		      .attr("class", "textselected")
 		      .style("text-anchor", "start")
 		      .style("font-size", fontSize)
-		      // .on("mouseover",dispatch.mouseOver)
-		      // .on("mouseout", dispatch.mouseOut)
+		      .on("mouseover",dispatch.mouseOver)
+		      .on("mouseout", dispatch.mouseOut)
 		} else {   
 
 			var legend = selection.selectAll("legend").data(legendValues).enter().append('div')
         .attr("class", "legend")
+
+        //.append('text').text(function(d) { return d.text}).style("color", function(d,i) { console.log(d) ; return d.color })
+
+
+      // legend.text(function(d,i) {return d.text})
+      //   .style("color", function(d,i) { console.log(d) ; return d.color })
 
       legend
         .html(function(d,i) {return d.text})
@@ -62,6 +68,9 @@ d3.models.legend = function () {
         .style("display","inline-block")
         .style("padding","0px 5px")
         .style("margin",".2em")
+
+
+
         //.attr("transform", function(d,i ) { return "translate(" + i * 50 + ",50)"})
 
       // legend.append('rect')

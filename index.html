@@ -46,9 +46,9 @@
 					    		ng-show="filtered.length === 1"><strong>{{filtered[0].location}}</strong> is 
 					    	
 					    		<span class="	{{ (updown === 'up') ? 'up' : 'down' }} "><span class=" {{ updown === 'up' ? 'glyphicon glyphicon-arrow-up' : 'glyphicon glyphicon-arrow-down' }}"></span>
-					    			{{ percentage(filtered[0]) }}% </span>
-
-					    			<span>
+					    			{{ percentage(filtered[0]) }}% 
+					    		</span>
+					    		<span>
 					    			since 2012
 					    		</span>
 
@@ -63,7 +63,9 @@
 					      <ul class="countryList">
  									<li class="country cf" ng-repeat="country in (filtered  = (data_regions | myfilter:query)) track by $index"> 
 						        <div class="info {{color(country)}}" ng-style = "elmStyle" ng-click ="choice(country)">
-						          <div class="country cell {{ filtered.length === 1 ? 'active' : 'inactive' }}" id="coun">{{country.location}}</div>
+						          <div class="country cell 
+						          	{{ filtered.length === 1 ? 'active' : 'inactive' }}" id="coun">{{country.location}}
+						          </div>
 						          <div class="year cell">{{ amount2002(country) }}</div>
 						          <div class="year cell">{{ amount2012(country) }}</div>
 						        </div><!-- info -->
