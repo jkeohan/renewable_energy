@@ -7,68 +7,45 @@
 .well { height:550px; }
 .cf { clear:both; }
 
+/*** Start SIDEBAR ***/
+/*
+RESOLVE WHY FULL PATHS DONT WORK
+.search #sidebar-content .country { width: 100;}
+.search #sidebar-content ul li{ cursor:pointer;  }
+.search #sidebar-content .countryList .country .country .cell .active{ cursor:default}
+*/
 
 #sidebar { height: 550px; border: 1px solid #ccc;  margin-bottom: 10px; }
 .search { font-size: .8em;}
-.search input{ margin-bottom:5px;}
-.search #sidebar-content #matched-record { margin-bottom:10px; border-radius: 50px}
+.search input{ margin-bottom:5px; width: 100%;}
+.search #sidebar-content #matched-record { margin-bottom:10px; border-radius: 50px;border: 1px solid black; border-radius:2px; padding:4px;}
 .search #sidebar-content #matched-record span.up { color:green;}
 .search #sidebar-content #matched-record span.down { color:red;}
-.search #sidebar-content .cell{ display: inline-block;  text-align: left; padding:4px; border: cursor:pointer;}
-.search #sidebar-content .countryList .country .country.cell:hover{ cursor:pointer!important; }
-.search #sidebar-content .countryList .country .country.cell.active{ cursor:default !important; }
-.search #sidebar-content .tableheader { padding:0px;}
-.search #sidebar-content .tableheader.cell .cell {font-weight: bold; margin: 0px;  cursor: default !important;}
-.search #sidebar-content .countrylist .country .info { fill-opacity:.3 ;}
-
-.search #sidebar-content .countryList{ display:inline-block;}
-.ng-cloak { display: none !important;}
-
-/**** Start SIDEBAR ****/
-
-#sidebar .search #matched-record{
-  border: 1px solid black;
-  border-radius:2px;
-  padding:4px;
-}
-/**** END SIDEBAR ****/
-
-/**** End Table ****/
+/*.search #sidebar-content .country { width: 100;}*/
 
 /**** Start UL\LI Table ****/
-/*.tableheader.cell { padding:4px 9px; border: none !important; cursor: default !important;}*/
-
+.search #sidebar-content .cell{ display: inline-block;  text-align: left; padding:4px; box-sizing: border-box;}
+.search #sidebar-content .tableheader { padding:0px;}
+.search #sidebar-content .tableheader.cell .cell {font-weight: bold; margin: 0px;  cursor: default;}
+.search #sidebar-content ul{ height:430px; overflow:scroll; list-style: none; padding:0px; }
+.search #sidebar-content ul li{ cursor:pointer;  }
+/*ul li{ cursor:pointer;  }*/
+.search #sidebar-content .countrylist .country .info { fill-opacity:.3 ;}
+/*.search #sidebar-content .countryList .country .country .cell .active{ cursor:default !important;}*/
+#active { cursor:default !important;}
 .country { width:100%; }
 .country.cell {width:110px; }
 .year.cell { width:50px; }
-.cell { box-sizing: border-box;}
+/**** End UL\LI Table ****/
 
-ul{ height:430px; overflow:scroll; list-style: none; padding:0px; }
-
-
-
-/*ul .countryList*/
-/**** End UL\LI ****/
+/*** END SIDEBAR ***/
 
 
-/*** Start Spreadsheet ***/
+/*** START LINE GRAPH ***/
 
-input{ width:100%; }
-
-spread-sheet { position:relative; width: 100%; overflow:scroll; background: red;}
-
-tr { border: 1px gray solid; }
-
-td { border: 2px black solid; }
-
-div.table { position:relative; height:500px; overflow:scroll; }
-div.data { position: absolute; width: 30px; padding: 0 5px; }
-div.head { position: absolute; }
-div.datarow { position: absolute;width: 100%;border-top: 2px black solid;background: white;height: 35px;overflow: hidden;}
-div.row {margin-left: 0px !important;}
-
+/**** START LEGEND ****/
 #graph-container #graph-legend { text-align: center;}
-/*** Start Line Graph ***/
+/**** END LEGEND ****/
 path { fill: none;}
 path:hover { fill: #EED6A5; stroke-width:5px;}
 .axis path,
@@ -81,7 +58,6 @@ path:hover { fill: #EED6A5; stroke-width:5px;}
 .lineChart { width:100%; height:510px;}
 
 /**** Start Tooltip ****
-
 .s3tooltip {
 position: absolute;
 padding: 5px;
@@ -91,44 +67,8 @@ border-radius: 12px;
 line-height: 20px;
 opacity: .07;
 background-color:white;
-
 }
-
 /**** End Tooltip ****/
-
-/**** Start Table ****/
-/*table{
-  width:200px;
-  margin:auto;
-}
-tr {
-  border: 1px gray solid;
-    width:200px;
-    opacity:1;
-}
-td {
-  font-size: 8px;
-  padding-right:15px;
-  padding-left:10px;
-  text-align: center;
-min-width: 125px;
-}
-
-td.data {
-    font-weight: 900;
-  }*/
-/*.sideBar{
-	height:400px;
-	width:300px;
-	position: absolute;
-  top: 40px;
-  right: 370px;
-}
-*/
-.fcomponents {
-	clear:both;
-}
-
 
 
 /*** End Line Graph ***/

@@ -5,13 +5,32 @@
  	function canvasSize(targetElement) {
     var newHeight = parseFloat(d3.select(targetElement).node().clientHeight);
     var newWidth = parseFloat(d3.select(targetElement).node().clientWidth);
+
     return [newWidth,newHeight];
   }
 
 	function dashboard(data) { 
 			createLineChart(data,".lineChart")
+			filterLegend(data,".legend")
 			redraw()
 	};
+
+	function filterLegend(data,targetDiv) {
+		var region = d3.set(data.map(function(d) {return d.region } ) )
+			.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
+		var activeRegions = d3.selectAll(targetDiv)
+		console.log(activeRegions)
+		activeRegions[0].map(function(d) {
+			region.map(function(r) {
+				console.log(d.textContent)
+				//console.log(r)
+				if(r === d.textContent) { console.log("yes")}
+			})
+		})
+		var active = d3.selectAll(targetDiv).active ? "false" : "true"
+		var newopacity = active ? "0" : "1"
+		d3.selectAll(targetDiv).style("opacity",1)
+	}
 
 	function createLineChart(data,targetDiv) {
 
@@ -59,7 +78,7 @@
 			.y(function(d) {return yScale(+d.amount);
 		});
 		//LEGEND
-		//RUN IF SO AS NOT TO 
+		//IF USED IN CASE LEGEND ALREADY EXISTS OTHERWISE IT WILL BE REWRITTEN WITH EACH ITERATION
 		if(d3.selectAll(".legend")[0].length === 0)	{
 			var rlegend = d3.models.legend()
 		    .fontSize(".8em")
@@ -67,6 +86,7 @@
 		    .inputScale(colorScale);
 			var svg_legend = d3.select("#graph-legend");
 			svg_legend.call(rlegend);
+			rlegend.on("mouseOver", function(d) { console.log(d)} )
 		};
 	};//CREATELINECHART
 

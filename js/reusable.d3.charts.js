@@ -11,7 +11,7 @@ d3.models.legend = function () {
 	var legendValues;
 	var position = "vertical";
 
-	var dispatch = d3.dispatch("mouseOver", "mouseOut");
+	var dispatch = d3.dispatch("mouseOver", "mouseOut","onClick");
 
 	function render(selection) {
 		//console.log(selection)
@@ -49,8 +49,8 @@ d3.models.legend = function () {
 		      .attr("class", "textselected")
 		      .style("text-anchor", "start")
 		      .style("font-size", fontSize)
-		      .on("mouseover",dispatch.mouseOver)
-		      .on("mouseout", dispatch.mouseOut)
+		      // .on("mouseover",dispatch.mouseOver)
+		      // .on("mouseout", dispatch.mouseOut)
 		} else {   
 
 			var legend = selection.selectAll("legend").data(legendValues).enter().append('div')
@@ -68,6 +68,9 @@ d3.models.legend = function () {
         .style("display","inline-block")
         .style("padding","0px 5px")
         .style("margin",".2em")
+        .on("mouseover",dispatch.mouseOver)
+        .on("mouseout", dispatch.mouseOut)
+        .on("click", dispatch.onClick)
 
 
 
