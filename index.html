@@ -61,13 +61,14 @@
 					  		</div><!-- col-md-4 -->
 					  		<div class="cf"></div>
 					      <ul class="countryList">
- 									<li class="country cf" id="{{ filtered.length === 1 ? 'active' : 'inactive' }}" ng-repeat="country in (filtered  = (data_regions | myfilter:query)) track by $index"> 
-						        <div class="info {{color(country)}}" ng-style = "elmStyle" ng-click ="choice(country)">
+ 									<li class="country cf {{color(country)}}" 
+ 											id="{{ filtered.length === 1 ? 'active' : 'inactive' }}" ng-repeat="country in (filtered  = (data_regions | myfilter:query)) track by $index"
+											ng-style = "elmStyle" 
+											ng-click ="choice(country)"> 
 						          <div class="country cell" id="coun">{{country.location}}
 						          </div>
 						          <div class="year cell">{{ amount2002(country) }}</div>
 						          <div class="year cell">{{ amount2012(country) }}</div>
-						        </div><!-- info -->
 							    </li>
 							  </ul>  
 					  	 </div><!-- sidebar-content -->

@@ -104,12 +104,18 @@ myApp.controller('ChartController', function($scope, $http) {
 	$scope.color = function(country) {
 		function convertHex(hex,opacity){
 	    hex = hex.replace('#','');
-	    r = parseInt(hex.substring(0,2), 16);g = parseInt(hex.substring(2,4), 16);b = parseInt(hex.substring(4,6), 16);
+	    r = parseInt(hex.substring(0,2), 16);
+	    g = parseInt(hex.substring(2,4), 16);
+	    b = parseInt(hex.substring(4,6), 16);
 	    result = 'rgba('+r+','+g+','+b+','+opacity/100+')';
 	    return result;
 		}
 	$scope.elmStyle = { 'background': convertHex(country.color,40) } 
 	};
+
+  $scope.mouseover = function(country) {
+  	console.log(country)
+  }
 });
 
 myApp.controller('MainCtrl', function($scope, $http, $interval){
