@@ -15,21 +15,15 @@
 			redraw()
 	};
 
-	function filterLegend(data,targetDiv) {
-		var region = d3.set(data.map(function(d) {return d.region } ) )
-			.values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
-		var activeRegions = d3.selectAll(targetDiv)
-		console.log(activeRegions)
-		activeRegions[0].map(function(d) {
-			region.map(function(r) {
-				console.log(d.textContent)
-				//console.log(r)
-				if(r === d.textContent) { console.log("yes")}
-			})
-		})
-		var active = d3.selectAll(targetDiv).active ? "false" : "true"
-		var newopacity = active ? "0" : "1"
-		d3.selectAll(targetDiv).style("opacity",1)
+	function filterLegend(legend) {
+		// var active = d3.selectAll(targetDiv).active ? "false" : "true"
+		// var newopacity = active ? "0" : "1"
+		// d3.selectAll(targetDiv).style("opacity",1)
+		//console.log(legend.text)
+		var chosen = d3.selectAll("path.location")
+  	var filtered = chosen.filter(function(d) { return d.region === legend.text })
+  	chosen.transition().duration(500).style("stroke-width",1).style("opacity",.1)
+  	filtered.transition().duration(500).style("stroke-width",4).style("opacity",1)
 	}
 
 	function createLineChart(data,targetDiv) {
@@ -48,12 +42,18 @@
 
 		//ENTER
 		paths.enter().append("path")	
-			.on('mouseover', function() { d3.select(this).style("stroke-width", 5) } )
+			.on('mouseover', function() { d3.select(this).style("stroke-width", 5) } ) 
 			.on('mouseout',  function() { d3.select(this).style("stroke-width", 2 ) } )
+			.on('click', function() { 
+				chosen = d3.selectAll('li.country')//.filter(function(d) { return d.id == "country Australia" })
+				console.log(chosen)
+			})
 			.style("stroke-width", 0).style("opacity",.4)
 			.style("stroke", function(d,i) {  return d.color})
 			.attr("id",function(d) { return d.location})
+			.classed("location",true)
 			.append("title").text(function(d) {return d.location})
+
 		
 	  //UPDATE
 	  //Array[1]...0: path#Oceana..__data__: Object..color,location,region,years[]
@@ -62,9 +62,9 @@
 		if(d3.select(".x.axis")[0][0] === null ) {  xgScale = svg.append("g").attr("class", "x axis")   }
 		if(d3.select(".y.axis")[0][0] === null ) {  ygScale = svg.append("g").attr("class", "y axis")
 			.append("text")//.style("text-anchor","start")
-  		.attr({ class: "ylabel", y: -60, x: -290, dy: ".71em" })
+  		.attr({ class: "ylabel", y: -60, x: -310, dy: ".71em" })
   		.attr("transform", "rotate(-90)")	
-  		.text("2012 Renewable Energy Output").style("font-size",20)   }
+  		.text("Renewable Energy Output").style("font-size",15)   }
 		
 		//CONFIGURE SCALES
 		xScale = d3.time.scale().domain(d3.extent(years, function(d) { return dateFormat.parse(d)}))
@@ -82,18 +82,31 @@
 		if(d3.selectAll(".legend")[0].length === 0)	{
 			var rlegend = d3.models.legend()
 		    .fontSize(".8em")
+		   	//.position("horizontal")
 		   	.position("horizontal")
-		    .inputScale(colorScale);
+		    .inputScale(colorScale)
+		    .on("onClick", filterLegend);
 			var svg_legend = d3.select("#graph-legend");
 			svg_legend.call(rlegend);
-			rlegend.on("mouseOver", function(d) { console.log(d)} )
+			// rlegend.on("mouseOver", function(d) { console.log(d)} )
 		};
+		//  INCLUDED TO TEST RESUABLE LEGENDS VERTICAL ATTR
+		// 	if(d3.selectAll(".legend")[0].length === 0)	{
+		// 	var width = 800;
+		// 	var rlegend = d3.models.legend()
+		//     .fontSize(".8em")
+		//    	.position("vertical")
+		//    	.width(width)
+		//     .inputScale(colorScale)
+		// 	svg.call(rlegend);
+		// 	rlegend.on("mouseOver", function(d) { console.log(d)} )
+		// };
 	};//CREATELINECHART
 
 	function redraw() {
 			//console.log("inside redraw")
 			var linechart = canvasSize(".lineChart")
-			var margin = {top:20,right:5,bottom:30,left:30}
+			var margin = {top:20,right:5,bottom:30,left:70}
 			var w = linechart[0] - margin.left - margin.right;
 			var h = linechart[1] - margin.top - margin.bottom;	
 			//Create main SVG
@@ -115,37 +128,3 @@
 				//.select("title").text(function(d) {return d.location})
 	}//REDRAW()
 
-				//svg.select(".x.axis").transition().duration(2000).ease("sin-in-out").call(yAxis);
-			//data is an array that contains the objects as follows: 
-			//location: "Australia"
-			//region: "Oceana"
-			//years [[{amount:"6.2", year:"2002"},{amount:"6.1", year:"2003"}]]
-
-					// .attr("class", function(d) {
-				// 		switch (d.region) {
-				// 			case "Oceana": return "line Oceana"
-				// 			case "Europe": return "line Europe"
-				// 			case "North America": return "line NA"
-				// 			case "Asia": return "line Asia"
-				// 			case "Middle East": return "line ME"
-				// 			case "Latin America": return "line LA"
-				// 			default: return "line"
-				// 		}							
-				// })
-				//paths.exit().transition().duration(500).attr("fill-opacity",0).remove()
-				// svg.append("g").attr("class", "x axis")
-				// svg.append("g").attr("class", "y axis")
-
-								//Axes
-
-				// svg.append("g").attr("class", "x axis").attr("transform", "translate(0," + (h - padding[2]) + ")").call(xAxis);
-				// svg.append("g").attr("class", "y axis").attr("transform", "translate(" + (padding[3]) + ",0)").call(yAxis)
-    //             // Add rotated "Number of years" unit of measure text to x-axis
-    //           .append("text")
-    //           .attr("class", "label")
-    //           .attr("transform", "rotate(-90)")
-    //           .attr("x", -20)
-    //           .attr("y", 5)
-    //           .attr("dy", ".91em")
-    //           .style("text-anchor", "end")
-    //           .text("Percent of Engery Generation ");

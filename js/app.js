@@ -1,7 +1,4 @@
-var myApp = angular.module('myApp', [
-  'ngRoute'//turns on deep linking
-  // 'programControllers'
-]);
+var myApp = angular.module('myApp', ['ngRoute','ngAnimate']);
 
 
 // myApp.config(['$routeProvider', function($routeProvider) {//$routeProvider service

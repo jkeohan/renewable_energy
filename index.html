@@ -10,10 +10,11 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 
 		<script src="http://d3js.org/d3.v3.min.js"></script>
-		 <script type="text/javascript" src="js/reusable.d3.charts.js"></script>
+		<script type="text/javascript" src="js/reusable.d3.charts.js"></script>
 
 	  <script src="lib/angular/angular.min.js"></script>
 		<script src="lib/angular/angular-route.min.js"></script>
+		<script src="lib/angular/angular-animate.js"></script>
 
 	  <script src="js/app.js"></script>
 	  <script src="js/directives.js"></script>
@@ -54,21 +55,27 @@
 
 					    		</div>
 					   	 	<p id="all-countries">All countries begining with: <strong>{{query}}</strong></p>
-					   		<div class="tableheader cell">
+					   		<div class="tableheader">
 						   		<div class="country cell">Country</div>
 						    	<div class="year cell">2002 %</div>
 						    	<div class="year cell">2012 %</div>
 					  		</div><!-- col-md-4 -->
 					  		<div class="cf"></div>
 					      <ul class="countryList">
- 									<li class="country cf {{color(country)}}" 
+ 									<li class="country cf {{color(country)}} animate-repeat" 
  											id="{{ filtered.length === 1 ? 'active' : 'inactive' }}" ng-repeat="country in (filtered  = (data_regions | myfilter:query)) track by $index"
 											ng-style = "elmStyle" 
-											ng-click ="choice(country)"> 
+											ng-click ="choice(country)"
+											ng-mouseover = "mouseover(country)"
+											ng-mouseout = "mouseout()"> 
 						          <div class="country cell" id="coun">{{country.location}}
 						          </div>
 						          <div class="year cell">{{ amount2002(country) }}</div>
 						          <div class="year cell">{{ amount2012(country) }}</div>
+							    </li>
+							    <li class="animate-repeat" ng-if="filtered.length === 0" 
+							    style="text-align:center; padding-top:20px">
+							    	<strong>No results found...</strong>
 							    </li>
 							  </ul>  
 					  	 </div><!-- sidebar-content -->

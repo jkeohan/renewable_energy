@@ -35,12 +35,6 @@ myApp.controller('ChartController', function($scope, $http) {
 	};
 
 	d3.csv('data/data_regions.csv', function(data) {
-		//$scope.data = data;
-    // var region = d3.set(data.map(function(d) { return d.Region } ) )
-				// .values().filter(function(d) { return !(d == "World")}).sort(d3.acscending) 
-	
-    //colorScale.domain(region)
-   
     dateFormat = d3.time.format("%Y");   
 			//console.log(data)
 			//years are filtered out to be used later when creating new dataset
@@ -71,6 +65,7 @@ myApp.controller('ChartController', function($scope, $http) {
 		$scope.$apply();
 			// var $scope.stringify = JSON.stringify($scope.ssdata)
 	 })//d3.csv
+
 	//$HTTP.GET CAN ALSO BE USED TO REPLACE D3.CSV AND $SCOPE.$APPLY
 	// $http.get('data/data_regions.csv').then(function(response) {
 	// 	$scope.data = response.data
@@ -89,8 +84,6 @@ myApp.controller('ChartController', function($scope, $http) {
 	// 	});
 
 	$scope.choice = function(country) { 
-		// if($scope.filtered.length == 1 && index == 0) { return }
-		// $scope.query=$scope.ssdata[index].Location
 		$scope.query = country.location
 		dashboard([country])
 	}
@@ -112,11 +105,19 @@ myApp.controller('ChartController', function($scope, $http) {
 		}
 	$scope.elmStyle = { 'background': convertHex(country.color,40) } 
 	};
-
   $scope.mouseover = function(country) {
-  	console.log(country)
+  	// console.log(d3.selectAll("path").filter(function(d) { return d.location === "Brazil"}))
+  	var chosen = d3.selectAll("path.location")
+  	var filtered = chosen.filter(function(d) { return d.location === country.location })
+  	chosen.transition().duration(500).style("stroke-width",1).style("opacity",.1)
+  	filtered.transition().duration(500).style("stroke-width",4).style("opacity",1)
+  }
+  $scope.mouseout = function() {
+  	var allPaths = d3.selectAll("path.location").transition().duration(500).style("stroke-width", 2).style("opacity",.4)
   }
 });
+
+
 
 myApp.controller('MainCtrl', function($scope, $http, $interval){
 	// d3.json("donut-data-api.json", function(d) { console.log(d)})
