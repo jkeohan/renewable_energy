@@ -1,59 +1,44 @@
+//First, we add our sub-namespace to the d3 namespace. It is not essential to do this, 
+//but name-spacing is good practice to not pollute the global space.
 d3.models = {};
-
+// We add the legend module, which is a simple function returning a function. The outer
+// function serves as the scoped closure for our module.
 d3.models.legend = function () {
-
+// Some variables are available in the closure and not accessible from the outside (pri- vate). 
+// They have default values.
 	var fontSize = 15;
 	var width = 650;
 	var height = 400;
 	var legendValues;
 	var position = "vertical";
-
+// One way for the module to expose events to the outside world is by using  d3.dispatch to declare 
+// an event that we can then listen to from the out- side when it’s triggered in the module.
+//Both d3.dispath and d3.rebind are classified as d3 Internals and are utilities for implementing reusable components.
 	var dispatch = d3.dispatch("mouseOver", "mouseOut","onClick");
 
 	function render(selection) {
 		//console.log(selection)
-		selection.each(function(_data) { 
+		selection.each(function(data) { 
 			console.log(selection)
 			if(position === "vertical") { 
 	        //D3 Vertical Legend//////////////////////////
 	        var legend = selection.selectAll("legend").data(legendValues).enter().append("g")
 							.attr("class", "legend")
-	            .attr("transform", function (d, i) {
-		            { return "translate(0," + i * 20 + ")" }
-	        		})
+	            .attr("transform", function (d, i) { return "translate(0," + i * 20 + ")" })
+	            .on("mouseover",dispatch.mouseOver) //dispath name cannot be same as event
+	        		.on("mouseout", dispatch.mouseOut)
+	       		  .on("click", dispatch.onClick)
 	        
-	        legend.append('rect')
-	            .attr("x", 0)
-	            .attr("y", 0)
-	            .attr("width", 10)
-	            .attr("height", 10)
-	            .style("fill", function(d,i) { return d.color })
-	        
-	        legend.append('text')
-	            .attr("x", 20)
-	            .attr("y", 10)
-	        //.attr("dy", ".35em")
-	       		 .text(function (d, i) {  return d.text;  })
-	            .attr("class", "textselected")
-	            .style("text-anchor", "start")
-	            .style("font-size", 15)
+			 legend.append('rect')
+			 		.attr({ x:width+5, y:5, width: 10, height: 10 })
+          .style("fill", function (d, i) { return d.color })
 
-				// var legend = selection.selectAll("legend").data(legendValues).enter().append("g")
-				// 	.attr("class", "legend")
+        legend.append('text')
+        	.attr({ x: width+25, y: 15})
+		  		.text(function (d, i) { return d.text})
+		      .style("text-anchor", "start")
+		      .style("font-size", fontSize)
 
-				// legend.attr("transform", function (d, i) { return "translate(0," + i * 20 + ")"})
-				// 	 legend.append('rect')
-				//  		.attr({ x:width+5, y:5, width: 10, height: 10 })
-	   //        .style("fill", function (d, i) { return d.color;})
-
-	   //     legend.append('text')
-	   //      	.attr({ x: width+25, y: 15})
-			 //  		.text(function (d, i) { return d.text})
-			 //      .attr("class", "textselected")
-			 //      .style("text-anchor", "start")
-			 //      .style("font-size", fontSize)
-			 //      // .on("mouseover",dispatch.mouseOver)
-			 //      // .on("mouseout", dispatch.mouseOut)
 			} else {   
 
 				var legend = selection.selectAll("legend").data(legendValues).enter().append('div')
@@ -68,40 +53,14 @@ d3.models.legend = function () {
 	        .on("mouseover",dispatch.mouseOver)
 	        .on("mouseout", dispatch.mouseOut)
 	        .on("click", dispatch.onClick)
-
-	      // legend.append('rect')
-	      //   .attr("x", 120)
-	      //   .attr("y", height - 150)
-	      //   .attr("width", 10)
-	      //   .attr("height", 10)
-	      //   .attr("class","rect enabled")
-	      //   .style("fill", function(d,i) { return d.color} )
-	      //   .style("stroke",function(d,i) { return d.color } )
-
-	        // .on("click", function(d) {
-	        //   //var legendChoice = d;
-	        //   var rect = d3.select(this); 
-	        //   var enabled = true;
-	        //   if(rect.attr("class") !== "disabled") {
-	        //       rect.attr('class','disabled')
-	        //     RemoveLegendChoice(d,false)
-	        //   } else { rect.attr("class","enabled") 
-	        //     AddLegendChoice(d,true)
-	        //     }
-	        // })
-
-	      // legend.append('text')
-	      //   .attr("x", 110)
-	      //   .attr("y", height - 145)
-	      //   .attr("dy", ".35em")
-	      //   .text(function(d,i) { return d.text})
-	      //   .attr("class","textselected")
-	      //   .style("text-anchor", "end")
-	      //   .style("font-size", 13)
 			  }//else
 		})//_selection.each()
 	}//render()
-
+	//Functions are also objects so we can add addtional properties and\or methods
+	// These “public” functions will be used as getters and setters at the same time. 
+	// They are getters when no argument is passed to the function; otherwise they set 
+	// the private variable to the new value passed as an argument. When setting, we return 
+	// the current context this, as we want these methods to be chainable.
 	render.fontSize = function(_x) {
 		if (!arguments.length) return fontSize;
 		fontSize = _x;
@@ -122,9 +81,9 @@ d3.models.legend = function () {
         scale = _x;
         legendValues = [];
        	scale.domain().forEach(function (el) {
-        var cellObject = {color: scale(el), text: el} 
-        legendValues.push(cellObject)
-        //console.log(legendValues)
+	        var cellObject = {color: scale(el), text: el} 
+	        legendValues.push(cellObject)
+	        //console.log(legendValues)
     	})
 		return this;
   }
@@ -133,7 +92,11 @@ d3.models.legend = function () {
   	position = _x;
   	return this;
   }
-
+	//https://github.com/mbostock/d3/wiki/Internals#rebind
 	d3.rebind(render, dispatch, "on")
 	return render
 }
+//d3.rebind(target,source,names)
+// Copies the methods with the specified names from source to target, and returns target. 
+// Calling one of the named methods on the target object invokes the same-named method on the source object, 
+// passing any arguments passed to the target method, and using the source object as the this context

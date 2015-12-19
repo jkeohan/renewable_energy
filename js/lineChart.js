@@ -14,13 +14,14 @@
 			filterLegend(data,".legend")
 			redraw()
 	};
-
+	//FilterLegend is executed as .legend class as: .on("onClick", filterLegend);
 	function filterLegend(legend) {
 		// var active = d3.selectAll(targetDiv).active ? "false" : "true"
 		// var newopacity = active ? "0" : "1"
 		// d3.selectAll(targetDiv).style("opacity",1)
 		//console.log(legend.text)
 		var chosen = d3.selectAll("path.location")
+  	var filtered = chosen.filter(ƒ('d.region === legend.text'))//example use of jetpack
   	var filtered = chosen.filter(function(d) { return d.region === legend.text })
   	chosen.transition().duration(500).style("stroke-width",1).style("opacity",.1)
   	filtered.transition().duration(500).style("stroke-width",4).style("opacity",1)
@@ -49,10 +50,10 @@
 				console.log(chosen)
 			})
 			.style("stroke-width", 0).style("opacity",.4)
-			.style("stroke", function(d,i) {  return d.color})
+			.style("stroke", d3.f('d.color')) //function(d,i) {  return d.color})
 			.attr("id",function(d) { return d.location})
 			.classed("location",true)
-			.append("title").text(function(d) {return d.location})
+			.append("title").text( d3.f('d.location')) //function(d) {return d.location})
 
 		
 	  //UPDATE
@@ -78,11 +79,12 @@
 			.y(function(d) {return yScale(+d.amount);
 		});
 		//LEGEND
-		//IF USED IN CASE LEGEND ALREADY EXISTS OTHERWISE IT WILL BE REWRITTEN WITH EACH ITERATION
+		//IF STATEMENT USED IN CASE LEGEND ALREADY EXISTS OTHERWISE IT WILL BE REWRITTEN WITH EACH ITERATION
+		//d3.selectAll('.legend') will contain one object even it's it's empty so we need to go examine that
+		//element to see if it contains any legends
 		if(d3.selectAll(".legend")[0].length === 0)	{
 			var rlegend = d3.models.legend()
 		    .fontSize(".8em")
-		   	//.position("horizontal")
 		   	.position("horizontal")
 		    .inputScale(colorScale)
 		    .on("onClick", filterLegend);
@@ -90,17 +92,18 @@
 			svg_legend.call(rlegend);
 			// rlegend.on("mouseOver", function(d) { console.log(d)} )
 		};
-		//  INCLUDED TO TEST RESUABLE LEGENDS VERTICAL ATTR
-		// 	if(d3.selectAll(".legend")[0].length === 0)	{
-		// 	var width = 800;
-		// 	var rlegend = d3.models.legend()
-		//     .fontSize(".8em")
-		//    	.position("vertical")
-		//    	.width(width)
-		//     .inputScale(colorScale)
-		// 	svg.call(rlegend);
-		// 	rlegend.on("mouseOver", function(d) { console.log(d)} )
-		// };
+		// INCLUDED TO TEST RESUABLE LEGENDS VERTICAL ATTR
+			// if(d3.selectAll(".legend")[0].length === 0)	{
+			// var rlegend = d3.models.legend()
+		 //    .fontSize(".8em")
+		 //   	.position("vertical")
+		 //   	// .width(700)
+		 //   	// .height(200)
+		 //    .inputScale(colorScale)
+		 //    .on("onClick", filterLegend);
+			// svg.call(rlegend);
+			// rlegend.on("onClick", filterLegend);
+		 // };
 	};//CREATELINECHART
 
 	function redraw() {

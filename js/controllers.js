@@ -5,6 +5,7 @@
    }
    return function( items, query) {
    	//console.log(items)
+   	//if empty return all items
    	if(!query) { return items }
     var filtered = [];
     angular.forEach(items, function(item) {
@@ -75,6 +76,8 @@ myApp.controller('ChartController', function($scope, $http) {
 	
 	$scope.$watch('filtered', function(newValue, oldValue) {
 			if (newValue !== oldValue) {dashboard(newValue) }
+			// console.log("newValue is: ")
+			// console.log(newValue)
 	  },true)
 
 	//THE FILTERED VARIABLE CAN ALSO BE EVALUATED IN CONTROLLER

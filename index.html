@@ -3,6 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	   <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+	   <link rel='stylesheet' href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 	  <link rel="stylesheet" href="css/custom.css">
 	  <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -11,6 +13,7 @@
 
 		<script src="http://d3js.org/d3.v3.min.js"></script>
 		<script type="text/javascript" src="js/reusable.d3.charts.js"></script>
+		<script type="text/javascript" src="lib/d3-jetpack.js"></script>
 
 	  <script src="lib/angular/angular.min.js"></script>
 		<script src="lib/angular/angular-route.min.js"></script>
@@ -20,21 +23,48 @@
 	  <script src="js/directives.js"></script>
 	  <script src="js/controllers.js"></script>
 
+
+
 	</head>
 	<header>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-9">
-					<p>Title Goes Here</p>
-				</div>
+					<h1 id="title">World Renewable Energy Output</h1>
+				</div><!--col-->
 				<div class="col-md-3">
-					<p>Tweet...Like...Go Here</p>
-				</div>
-			</div>
-		</div>
+							<article class="socialmediaicons">
+							   <span class="title">Follow Me: &nbsp </span>
+							  <ul class="group">
+							  	<li><a href="https://github.com/jkeohan"><img class="icon" id="github" src="/images/socialmedia/github.png" alt="name"></a></li>
+							  	<li><a href="https://www.linkedin.com/in/jkeohan"><img class="icon" src="/images/socialmedia/linkedin.png" alt="name"></a></li>
+							  	<li><a href="https://jkeohan.wordpress.com/"><img class="icon" src="/images/socialmedia/wordpress.png" alt="name"></a></li>
+							  </ul>
+							</article>
+				</div><!--col-->
+
+
+<!-- 				  "social" : [{
+    "shortname" : "gitbub",
+    "img" : "/images/socialmedia/github.png",
+    "url" : "https://github.com/jkeohan"
+  },{
+    "shortname" : "LinkdIN",
+    "img" : "/images/socialmedia/linkedin.png",
+    "url" : "http://www.LinkdIN.com/in/jkeohan/"
+  },{
+    "shortname" : "Wordpress",
+    "img" : "/images/socialmedia/wordpress.png",
+    "url" : "https://jkeohan.wordpress.com/"
+  }], -->
+
+			</div><!--row-->
+		</div><!--container-->
+
 	</header>
 	<body>
 		<div class="container" ng-controller="ChartController">
+				<hr>
 			<div class="row">
 				<div class="col-md-3">
 					<div class="well" id="sidebar">
@@ -63,7 +93,8 @@
 					  		<div class="cf"></div>
 					      <ul class="countryList">
  									<li class="country cf {{color(country)}} animate-repeat" 
- 											id="{{ filtered.length === 1 ? 'active' : 'inactive' }}" ng-repeat="country in (filtered  = (data_regions | myfilter:query)) track by $index"
+ 											id="{{ filtered.length === 1 ? 'active' : 'inactive' }}" 
+ 											ng-repeat="country in (filtered  = (data_regions | myfilter:query)) track by $index"
 											ng-style = "elmStyle" 
 											ng-click ="choice(country)"
 											ng-mouseover = "mouseover(country)"
