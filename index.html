@@ -22,10 +22,8 @@
 	  <script src="js/app.js"></script>
 	  <script src="js/directives.js"></script>
 	  <script src="js/controllers.js"></script>
-
-
-
 	</head>
+
 	<header>
 		<div class="container">
 			<div class="row">
@@ -42,26 +40,10 @@
 							  </ul>
 							</article>
 				</div><!--col-->
-
-
-<!-- 				  "social" : [{
-    "shortname" : "gitbub",
-    "img" : "/images/socialmedia/github.png",
-    "url" : "https://github.com/jkeohan"
-  },{
-    "shortname" : "LinkdIN",
-    "img" : "/images/socialmedia/linkedin.png",
-    "url" : "http://www.LinkdIN.com/in/jkeohan/"
-  },{
-    "shortname" : "Wordpress",
-    "img" : "/images/socialmedia/wordpress.png",
-    "url" : "https://jkeohan.wordpress.com/"
-  }], -->
-
 			</div><!--row-->
 		</div><!--container-->
-
 	</header>
+
 	<body>
 		<div class="container" ng-controller="ChartController">
 				<hr>
@@ -92,7 +74,7 @@
 					  		</div><!-- col-md-4 -->
 					  		<div class="cf"></div>
 					      <ul class="countryList">
- 									<li class="country cf {{color(country)}} animate-repeat" 
+ 									<li class="country {{country.location}} cf {{color(country)}} animate-repeat" 
  											id="{{ filtered.length === 1 ? 'active' : 'inactive' }}" 
  											ng-repeat="country in (filtered  = (data_regions | myfilter:query)) track by $index"
 											ng-style = "elmStyle" 

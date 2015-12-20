@@ -110,6 +110,10 @@ myApp.controller('ChartController', function($scope, $http) {
 	};
   $scope.mouseover = function(country) {
   	// console.log(d3.selectAll("path").filter(function(d) { return d.location === "Brazil"}))
+  	// var allCountries = d3.selectAll(".country").style("opacity",.1)
+		//debugger;
+	  // var allListItems = d3.selectAll("ul li.country")
+	  // allListItems.style("opacity",.5)
   	var chosen = d3.selectAll("path.location")
   	var filtered = chosen.filter(function(d) { return d.location === country.location })
   	chosen.transition().duration(500).style("stroke-width",1).style("opacity",.1)
